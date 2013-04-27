@@ -13,9 +13,7 @@ $(document).ready(function($) {
 			$('#filter').animate({
 				opacity: 1,
 				width: '15em'
-			}, 500, function() {
-				// Animation complete.
-			});
+			}, 500);
 	    }
 	});
 
@@ -39,15 +37,15 @@ $(document).ready(function($) {
 	
 	$('.search-term').keypress(function (e) {
 		if (e.which == 13) {
-  var address = $('.search-term').val();
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode( { 'address': address}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      mapHandler.setCenter(results[0].geometry.location);
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
+			var address = $('.search-term').val();
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode( { 'address': address}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					mapHandler.setCenter(results[0].geometry.location);
+				} else {
+					alert('Geocode was not successful for the following reason: ' + status);
+				}
+			});
 		}
 	});
 	
