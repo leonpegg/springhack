@@ -51,9 +51,10 @@ exports.bikes = function(req, res) {
   		data.on("end", function() {
 			console.log('Bike data request complete');
 			//sometimes tfl returns an empty string for the bike data
-			if (!body || '' == body && bikedata.data) {
+			if (!body || '' == body) {
 				console.log('Bike data returned empty string');
-				res.send(bikedata.data);
+				if (bikedata.data)	//send data from cache
+					res.send(bikedata.data);
 				return;
 			}
 			parseString(body, function (err, result) {
