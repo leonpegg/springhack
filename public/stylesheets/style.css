@@ -1,32 +1,3 @@
-html,
-body,
-#map {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-}
-.olControlZoom.olControlNoSelect {
-  left: inherit !important;
-  right: 8px;
-}
-.olControlAttribution.olControlNoSelect {
-  bottom: 3px;
-  right: 3px;
-}
-#nav {
-  position: absolute;
-  z-index: 1004;
-  left: 0;
-  top: 0;
-  width: 80px;
-  height: 100%;
-}
-.search,
-.twitter {
-  width: 100%;
-  height: 50%;
-}
 .search {
   background: yellow;
 }
