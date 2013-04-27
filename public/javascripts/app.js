@@ -1,13 +1,89 @@
-map = new OpenLayers.Map("mapdiv", { displayProjection: epsg4326} );
-layerCloudMade = new OpenLayers.Layer.OSM("OSM CloudMade 'Pale dawn'",                                                   
-                                           ["http://a.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/998/256/${z}/${x}/${y}.png",
-                                            "http://b.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/998/256/${z}/${x}/${y}.png",
-                                            "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/998/256/${z}/${x}/${y}.png"]);
+$(document).ready(function($) {
+	$('.search').on('click', function () {
+		$('#search').animate({
+			width: '250px'
+		}, 500, function() {
+			// Animation complete.
+		});
+	});
+	$('.twitter').on('click', function () {
+		$('#twitter').animate({
+			width: '250px'
+		}, 500, function() {
+			// Animation complete.
+		});
+	});
+	mapHandler.initMap();
+});
+// to recenter the map
+// mapHandler.setCoords(lat, lon)
 
-layerOJW = new OpenLayers.Layer.OSM("OJW tubes", "http://ojw.dev.openstreetmap.org/map/tiles/rail/${z}/${x}/${y}.png");
+/**
+ * Simple singleton to handle the map installation and setting the centres
+ * Should be enhanced to handle the layers, etc
+ */
+var mapHandler = {
+	latitude: -1.788,
+	longitude: 53.571,
+	map : null,
+	zoom: 13,
 
-layerMapnik = new OpenLayers.Layer.OSM();
+	// initialise the map and store the data
+	initMap: function () {
+		map = new OpenLayers.Map("map");
+		var mapnik = new OpenLayers.Layer.OSM();
+		map.addLayer(mapnik);
 
-map.addLayer(layerMapnik);
-map.addLayer(layerCloudMade);
-map.addLayer(layerOJW);
+		// get the standard markers
+		var markers = this.getMarkers();
+		
+		// set the markers
+		map.addLayer(markers);
+		
+		//s tore the map
+		this.map = map;
+
+		// try and get the location from the browser
+		this.requestLocation();
+
+	},
+	// request the browser to give us the location
+	requestLocation : function () {
+		// func(success, fail)
+		navigator.geolocation.getCurrentPosition(this.locationGranted, this.locationDenied);
+	},
+	// centre a map with either the defailt lang and long or the new ones
+	setCentre: function() {
+		
+		// creates a long and lat object for the base lat and long in this object
+		var lonlat = new OpenLayers.LonLat(this.longitude, this.latitude).transform(
+			new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+			new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator
+		);	
+
+		// set the center
+		this.map.setCenter(lonlat, mapHandler.zoom);	
+	},
+	getMarkers : function() {
+		// holder function
+		return new OpenLayers.Layer.Markers( "Markers" );
+	},
+	// set the centre of a map
+	setCoords: function (latitude, longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+
+		this.setCentre();
+	},
+	locationDenied : function () {
+		mapHandler.setCentre();
+	},
+	// we have the geo location, so we can see get the coords required
+	locationGranted : function (position) {
+		latitude = position.coords.latitude;
+  		longitude = position.coords.longitude;	
+  		
+  		// set the centre
+  		mapHandler.setCoords(latitude, longitude);
+	}
+};
