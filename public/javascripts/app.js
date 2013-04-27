@@ -1,19 +1,18 @@
 $(document).ready(function($) {
 	$('.filter').on('click', function () {
-		console.log($('#search').css('width'));
-	    if ($('#filter').css('width') == '250px') {
+	    if ($('#filter').width() > 0) {
 			$('#filter').animate({
 				opacity: 0,
-				width: '0px'
+				width: '0em'
 			}, 500);
 	    } else {
 			$('#twitter').animate({
 				opacity: 0,
-	    		width: '0px' 
+	    		width: '0em' 
 	    	}, 250);
 			$('#filter').animate({
 				opacity: 1,
-				width: '250px'
+				width: '15em'
 			}, 500, function() {
 				// Animation complete.
 			});
@@ -21,19 +20,19 @@ $(document).ready(function($) {
 	});
 
 	$('.twitter').on('click', function () {
-		if ($('#twitter').css('width') == '250px') {
+		if ($('#twitter').width() > 0) {
 			$('#twitter').animate({
 				opacity: 0,
-				width: '0px' 
+				width: '0em' 
 			}, 250);
 		} else {
 			$('#filter').animate({
 				opacity: 0,
-				width: '0px' 
+				width: '0em' 
 			}, 250);
 			$('#twitter').animate({
 				opacity: 1,
-				width: '250px'
+				width: '15em'
 			}, 500);
 		}
 	});
