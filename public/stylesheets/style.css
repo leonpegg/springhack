@@ -1,6 +1,9 @@
 .search,
 .twitter {
   text-align: center;
+}
+.search span,
+.twitter span {
   font-size: 60px;
 }
 .search,
