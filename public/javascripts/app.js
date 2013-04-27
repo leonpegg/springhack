@@ -51,25 +51,37 @@ var mapHandler = {
 	longitude: 53.571,
 	map : null,
 	zoom: 13,
-
+	marker: new google.maps.Marker({
+    	draggable: true
+	}),
 	// initialise the map and store the data
 	initMap: function () {
-		map = new OpenLayers.Map("map");
-		var mapnik = new OpenLayers.Layer.OSM();
-		map.addLayer(mapnik);
-
-		// get the standard markers
-		var markers = this.getMarkers();
-		
-		// set the markers
-		map.addLayer(markers);
-		
-		//s tore the map
-		this.map = map;
 
 		// try and get the location from the browser
 		this.requestLocation();
+		//console.log(mapHandler.latitude, mapHandler.longitude);
+		map = new google.maps.Map(document.getElementById("map"), {
+		     zoom: mapHandler.zoom,
+		     center: new google.maps.LatLng(mapHandler.latitude, mapHandler.longitude),
+		     scrollwheel: false,
+		     scaleControl: true,
+		     mapTypeControl: false,
+		     streetViewControl: false,
+		     keyboardShortcuts: false
+		 });
+		 //this.marker.setPosition(map.getCenter());
+		 //this.marker.setMap(map);
 
+		 //request_crimes(mode);
+
+		 //google.maps.event.addListener(this.marker, "dragend", function() {
+		     
+		 //});
+		 //google.maps.event.addListener(map, "zoom_changed", function() {
+		     
+		 //});
+
+	 	//this.map = map;
 	},
 	// request the browser to give us the location
 	requestLocation : function () {
@@ -79,28 +91,26 @@ var mapHandler = {
 	// centre a map with either the defailt lang and long or the new ones
 	setCentre: function() {
 		
-		// creates a long and lat object for the base lat and long in this object
-		var lonlat = new OpenLayers.LonLat(this.longitude, this.latitude).transform(
-			new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-			new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator
-		);	
+		// // creates a long and lat object for the base lat and long in this object
+		// var lonlat = new OpenLayers.LonLat(this.longitude, this.latitude).transform(
+		// 	new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+		// 	new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator
+		// );	
 
-		// set the center
-		this.map.setCenter(lonlat, mapHandler.zoom);	
+		// // set the center
+		// this.map.setCenter(lonlat, mapHandler.zoom);	
 	},
 	getMarkers : function() {
 		// holder function
-		return new OpenLayers.Layer.Markers( "Markers" );
+		//return new OpenLayers.Layer.Markers( "Markers" );
 	},
 	// set the centre of a map
 	setCoords: function (latitude, longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
-
-		this.setCentre();
 	},
 	locationDenied : function () {
-		mapHandler.setCentre();
+		// do nothing
 	},
 	// we have the geo location, so we can see get the coords required
 	locationGranted : function (position) {
