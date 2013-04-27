@@ -54,21 +54,20 @@ var mapHandler = {
 
 	// initialise the map and store the data
 	initMap: function () {
-		map = new OpenLayers.Map("map");
-		var mapnik = new OpenLayers.Layer.OSM();
-		map.addLayer(mapnik);
+		
+		var mapOptions = {
+			center: new google.maps.LatLng(51.5, 0),
+			zoom: 13,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
 
-		// get the standard markers
-		var markers = this.getMarkers();
-		
-		// set the markers
-		map.addLayer(markers);
-		
+		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
 		//s tore the map
 		this.map = map;
 
 		// try and get the location from the browser
-		this.requestLocation();
+		// this.requestLocation();
 
 	},
 	// request the browser to give us the location

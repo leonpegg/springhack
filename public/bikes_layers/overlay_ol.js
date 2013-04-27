@@ -117,8 +117,8 @@ function addBikesToGoogleMap(bike_url, map) {
             var total = spaces + bikes;
 			var marker = new google.maps.Marker({
 				position: location,
-				icon: '/images/cycle-hire-pushpin-icon.gif',
-				title: e.name
+				icon: '/images/cycle-hire-pushpin-icon.gif'//,
+//				title: e.name
 			});
             if(bikes < threshold) {
                 var ins = {
@@ -140,7 +140,7 @@ function addBikesToGoogleMap(bike_url, map) {
                 safeSpaces.push(location);
             }
 			layers.push(marker);
-			markers.push(markers);
+			markers.push(marker);
         });
         if(fewBikes.length > 0) {
             var heatmap = addToMap(fewBikes, map, [
@@ -179,7 +179,7 @@ function addBikesToGoogleMap(bike_url, map) {
 function renderGoogleMap(checked) {
 	var map = mapHandler.map;
 	if (checked) {
-		mapHandler.bikeLayers = addBikesToMap('data/bikes', map);
+		mapHandler.bikeLayers = addBikesToGoogleMap('data/bikes', map);
 	}
 	else if (mapHandler.bikeLayers) {
 		$.each(mapHandler.bikeLayers, function(i, e) {
