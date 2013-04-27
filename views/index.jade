@@ -3,14 +3,19 @@ extends layout
 block content
   #map
   #nav
-    .search
-      span.icon-search
+    .filter
+      span.icon-filter
     .twitter
       span.icon-twitter
-  #search
+  #filter
     form
       input#police(type='button', value='Police')
+      #policeData
+        #policeTotal
       label Bikes
         input#bikes(type='checkbox')
-      input.search-box(type='input', placeholder='Location')
   #twitter
+  #search
+    form
+      label.icon-search
+        input(type='text')

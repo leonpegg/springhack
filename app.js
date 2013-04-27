@@ -6,6 +6,7 @@ global.bikedata = {};
 
 var express = require('express')
   , routes = require('./routes')
+  , police = require('./routes/police.js')
   , http = require('http')
   , path = require('path');
 
@@ -31,7 +32,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/data/police', routes.policeData);
+app.get('/data/police/crimes/:latitude/:longitude', police.policeCrimeData);
+app.get('/data/police/neighbourhood:latitude/:longitude', police.policeNeighbourhoodData);
 app.get('/data/bikes', routes.bikes);
 
 http.createServer(app).listen(app.get('port'), function(){

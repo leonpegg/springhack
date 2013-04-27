@@ -1,8 +1,8 @@
 $(document).ready(function($) {
-	$('.search').on('click', function () {
+	$('.filter').on('click', function () {
 		console.log($('#search').css('width'));
-	    if ($('#search').css('width') == '250px') {
-			$('#search').animate({
+	    if ($('#filter').css('width') == '250px') {
+			$('#filter').animate({
 				opacity: 0,
 				width: '0px'
 			}, 500);
@@ -11,7 +11,7 @@ $(document).ready(function($) {
 				opacity: 0,
 	    		width: '0px' 
 	    	}, 250);
-			$('#search').animate({
+			$('#filter').animate({
 				opacity: 1,
 				width: '250px'
 			}, 500, function() {
@@ -27,7 +27,7 @@ $(document).ready(function($) {
 				width: '0px' 
 			}, 250);
 		} else {
-			$('#search').animate({
+			$('#filter').animate({
 				opacity: 0,
 				width: '0px' 
 			}, 250);
