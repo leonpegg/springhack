@@ -45,8 +45,7 @@ $('document').ready( function () {
 		//$.get('/data/police/'+mapHandler.latitude+'/'+mapHandler.longitude, function(a) {
 		//	console.log(a);
 		//});
-		$.get('/data/police/crimes/'+mapHandler.latitude+'/'+mapHandler.longitude, function(a) {
-			var data = JSON.parse(a);
+		$.getJSON('/data/police/crimes/'+mapHandler.latitude+'/'+mapHandler.longitude, function(data) {
 			handleData(data);
 		});
 	});

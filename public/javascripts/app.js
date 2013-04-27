@@ -37,6 +37,13 @@ $(document).ready(function($) {
 			}, 500);
 		}
 	});
+	
+	$('.search-term').keypress(function (e) {
+		if (e.which == 13) {
+			console.log('run geolocation');
+		}
+	});
+	
 	mapHandler.init();
 });
 // to recenter the map
@@ -71,7 +78,16 @@ var mapHandler = {
 		     mapTypeControl: false,
 		     streetViewControl: false,
 		     keyboardShortcuts: false,
-		     mapTypeId: google.maps.MapTypeId.ROADMAP
+		     mapTypeId: google.maps.MapTypeId.ROADMAP,
+		     panControl: true,
+		     panControlOptions: {
+			     position: google.maps.ControlPosition.RIGHT_TOP
+			 },
+			 zoomControl: true,
+			 zoomControlOptions: {
+				 style: google.maps.ZoomControlStyle.LARGE,
+				 position: google.maps.ControlPosition.RIGHT_TOP
+			 }
 		 });
 		 //this.marker.setPosition(map.getCenter());
 		 //this.marker.setMap(map);
