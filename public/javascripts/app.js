@@ -56,7 +56,7 @@ var mapHandler = {
 	setCentre: function() {
 		
 		// creates a long and lat object for the base lat and long in this object
-		var lonlat = new OpenLayers.LonLat(this.latitude, this.longitude).transform(
+		var lonlat = new OpenLayers.LonLat(this.longitude, this.latitude).transform(
 			new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
 			new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator
 		);	
@@ -69,9 +69,10 @@ var mapHandler = {
 		return new OpenLayers.Layer.Markers( "Markers" );
 	},
 	// set the centre of a map
-	setCoords: function (lat, long) {
-		this.latitude = lat;
-		this.longitude = long;
+	setCoords: function (latitude, longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+
 		this.setCentre();
 	},
 	locationDenied : function () {
