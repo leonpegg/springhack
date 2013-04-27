@@ -1,33 +1,8 @@
-/// <reference path="../../../../../frameworks_and_libraries/DefinitelyTyped/jquery/jquery.d.ts" />
-/// <reference path="../../../../../frameworks_and_libraries/DefinitelyTyped/googlemaps/google.maps.d.ts" />
 
-function addToMap(data, map, colours) {
-    var options = {
-        map: null,
-        data: data,
-        dissipating: //dissipating: false,
-        true,
-        opacity: 0.9,
-        gradient: colours,
-        maxIntensity: null,
-        radius: 25
-    };
-    var heatmap = new google.maps.visualization.HeatmapLayer(options);
-    heatmap.setMap(map);
-}
 
-$('document').ready(function() {
-    var lat = 51.51104050;
-    var lng = -0.1137257;
+function addBikesToMap(bike_url, map) {
 
-	var map = new OpenLayers.Map('map-canvas');
 	var layer = new OpenLayers.Layer.OSM();
-
-	var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-	var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-	var position       = new OpenLayers.LonLat(lng,lat).transform( fromProjection, toProjection);
-	var zoom           = 13; 
-		
 	var heatmapFewBikes = new OpenLayers.Layer.Heatmap("Few Bikes Layer"
 		, map
 		, layer
@@ -47,9 +22,8 @@ $('document').ready(function() {
 	var layers = [layer, heatmapFewBikes, heatmapFewSpaces, heatmapSafeSpaces];
 		
 	map.addLayers(layers);
-	map.setCenter(position, zoom);
 
-    $.getJSON('../data/bikes', null, function (json) {
+    $.getJSON(bike_url, null, function (json) {
         var fewbikes = [];
         var fewspaces = [];
         var safespaces = [];
@@ -96,6 +70,23 @@ $('document').ready(function() {
             console.log('fewbikes:', fewbikes.length, ', fewspaces:', fewspaces.length, ', safespaces:', safespaces.length);
         }
     });
-});	
-// google.maps.event.addDomListener(window, 'load', initialize);
-//@ sourceMappingURL=overlay.js.map
+	
+	return layers;
+}
+
+$('document').ready(function() {
+	
+	$('input#bikes').click(function() {
+		var checked = $(this).is(':checked');
+		var map = mapHandler.map;
+		if (checked) {
+			mapHandler.bikeLayers = addBikesToMap('data/bikes', map);
+			}
+		else if (mapHandler.bikeLayers) {
+			$.each(mapHandler.bikeLayers, function(i, e) {
+				map.removeLayer(e);
+			});
+		}
+	});
+});
+

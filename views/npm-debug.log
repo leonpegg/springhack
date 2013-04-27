@@ -1,0 +1,28 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'search',
+1 verbose cli   '/.*' ]
+2 info using npm@1.2.14
+3 info using node@v0.10.0
+4 warn Building the local index for the first time, please be patient
+5 verbose url raw /-/all
+6 verbose url resolving [ 'https://registry.npmjs.org/', './-/all' ]
+7 verbose url resolved https://registry.npmjs.org/-/all
+8 info trying registry request attempt 1 at 17:35:09
+9 http GET https://registry.npmjs.org/-/all
+10 error TypeError: Cannot call method 'warn' of undefined
+10 error     at requestAll_ (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\get.js:73:14)
+10 error     at C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\get.js:54:30
+10 error     at Object.oncomplete (fs.js:93:15)
+11 error If you need help, you may report this log at:
+11 error     <http://github.com/isaacs/npm/issues>
+11 error or email it to:
+11 error     <npm-@googlegroups.com>
+12 error System Windows_NT 6.1.7601
+13 error command "C:\\Program Files (x86)\\nodejs\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "search" "/.*"
+14 error cwd D:\src\web_apps\springhack\views
+15 error node -v v0.10.0
+16 error npm -v 1.2.14
+17 error type non_object_property_call
+18 verbose exit [ 1, true ]
