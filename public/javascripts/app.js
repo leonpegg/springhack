@@ -72,6 +72,7 @@ var mapHandler = {
 	setCoords: function (latitude, longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
+
 		this.setCentre();
 	},
 	locationDenied : function () {
