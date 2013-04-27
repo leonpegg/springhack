@@ -1,4 +1,4 @@
-$(function() {
+$(document).ready(function($) {
 	map = new OpenLayers.Map("map");
 	var mapnik = new OpenLayers.Layer.OSM();
 	map.addLayer(mapnik);
