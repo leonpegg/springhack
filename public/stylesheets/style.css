@@ -4,17 +4,18 @@
 }
 .filter span,
 .twitter span {
+  color: #7687DE;
   display: block;
   padding-top: 0.5em;
   font-size: 2em;
 }
 .filter,
 #filter {
-  background: #FCFF50;
+  background: #F4F3F0;
 }
 .twitter,
 #twitter {
-  background: #9AE4E8;
+  background: #EBE6DC;
 }
 #filter,
 #twitter {
