@@ -83,6 +83,6 @@ var mapHandler = {
   		longitude = position.coords.longitude;	
   		
   		// set the centre
-  		mapHandler.setCoords(latitude, longitude);
+  		mapHandler.setCoords(longitude, latitude);
 	}
 };
