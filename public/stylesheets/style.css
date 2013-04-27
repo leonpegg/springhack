@@ -6,3 +6,7 @@
 #twitter {
   background: blue;
 }
+#search,
+#twitter {
+  opacity: 0;
+}
