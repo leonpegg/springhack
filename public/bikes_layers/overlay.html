@@ -10,14 +10,16 @@
       #map-canvas { height: 100% }
     </style>
       
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js">
-    </script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-    <script type="text/javascript"
+    <!--script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCClvuRbnarOxeBK7yc8qLOmKAEo3bWwsI&sensor=true&libraries=visualization">
-    </script>
+    </script-->
 
-    <script type="text/javascript" src="overlay.js"></script>
+	<script type="text/javascript" src="http://openlayers.org/api/OpenLayers.js"></script>
+    <script type="text/javascript" src="..\javascripts\vendor\heatmap.js\heatmap.js"></script>
+    <script type="text/javascript" src="..\javascripts\vendor\heatmap.js\heatmap-openlayers.js"></script>
+    <script type="text/javascript" src="overlay_ol.js"></script>
   </head>
   <body>
     <div id="map-canvas"/>
