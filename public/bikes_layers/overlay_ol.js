@@ -49,13 +49,13 @@ $('document').ready(function() {
 	map.addLayers(layers);
 	map.setCenter(position, zoom);
 
-    $.getJSON('livecyclehireupdates.json', null, function (json) {
+    $.getJSON('../data/bikes', null, function (json) {
         var fewbikes = [];
         var fewspaces = [];
         var safespaces = [];
         var threshold = 3;
         $.each(json.stations.station, function (i, e) {
-			var location = new OpenLayers.LonLat(e.long, e.lat);
+			var location = new OpenLayers.LonLat(parseFloat(e.long), parseFloat(e.lat));
             var spaces = parseInt(e.nbEmptyDocks);
             var bikes = parseInt(e.nbBikes);
             var total = spaces + bikes;

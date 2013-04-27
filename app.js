@@ -1,3 +1,5 @@
+
+global.bikedata = {};
 /**
  * Module dependencies.
  */
@@ -30,6 +32,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/data/police', routes.policeData);
+app.get('/data/bikes', routes.bikes);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
