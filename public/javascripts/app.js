@@ -39,7 +39,15 @@ $(document).ready(function($) {
 	
 	$('.search-term').keypress(function (e) {
 		if (e.which == 13) {
-			console.log('run geolocation');
+  var address = $('.search-term').val();
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      mapHandler.setCenter(results[0].geometry.location);
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
 		}
 	});
 	
@@ -71,7 +79,7 @@ var mapHandler = {
 
 	// initialise the map and store the data
 	initMap: function () {
-		map = new google.maps.Map(document.getElementById("map"), {
+		this.map = new google.maps.Map(document.getElementById("map"), {
 		     zoom: mapHandler.zoom,
 		     center: new google.maps.LatLng(mapHandler.latitude, mapHandler.longitude),
 		     scrollwheel: false,
@@ -110,7 +118,7 @@ var mapHandler = {
 		navigator.geolocation.getCurrentPosition(this.locationGranted, this.locationDenied);
 	},
 	// centre a map with either the defailt lang and long or the new ones
-	setCentre: function() {
+	setCenter: function(location) {
 		
 		// // creates a long and lat object for the base lat and long in this object
 		// var lonlat = new OpenLayers.LonLat(this.longitude, this.latitude).transform(
@@ -119,7 +127,9 @@ var mapHandler = {
 		// );	
 
 		// // set the center
-		// this.map.setCenter(lonlat, mapHandler.zoom);	
+		console.log(this.map);
+		console.log(location);
+		this.map.setCenter(location);	
 	},
 	getMarkers : function() {
 		// holder function
