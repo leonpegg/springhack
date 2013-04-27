@@ -45,8 +45,10 @@
 #filter .filter-group {
   display: block;
   padding: 0.5em;
+  border-bottom: dashed 1px gray;
 }
 .tweetCloud {
   display: block;
   padding: 0.5em;
+  border-bottom: dashed 1px gray;
 }

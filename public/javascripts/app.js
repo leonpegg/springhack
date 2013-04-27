@@ -49,6 +49,7 @@ $(document).ready(function($) {
 		}
 	});
 	
+	twitter.screenname = 'tfltravelalerts';
 	twitter.updateTweets();
 	
 	mapHandler.init();
