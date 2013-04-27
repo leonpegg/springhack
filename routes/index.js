@@ -1,5 +1,5 @@
 var http = require("http")
-	, parseString = require('xml2js').parseString;
+  , parseString = require('xml2js').parseString;
 
 /*
  * GET home page.
