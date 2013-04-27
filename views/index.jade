@@ -8,11 +8,14 @@ block content
     .twitter
       span.icon-twitter
   #filter
-    input#police(type='button', value='Police')
-    #policeData
-      #policeTotal
-    label Bikes
-      input#bikes(type='checkbox')
+    .filter-group
+      label.filter-toggle Police
+        input#police-crimes(type='checkbox')
+      .filter-options
+    .filter-group
+      label.filter-toggle Transport (Bikes)
+        input#transport-bikes(type='checkbox')
+      .filter-options
   #twitter
   #search
     label.icon-search

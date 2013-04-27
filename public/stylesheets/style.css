@@ -42,10 +42,11 @@
   padding-left: 0;
   width: 85%;
 }
-.tweetCloud {
+#filter .filter-group {
   display: block;
   padding: 0.5em;
 }
-#policeData {
-  display: none;
+.tweetCloud {
+  display: block;
+  padding: 0.5em;
 }
