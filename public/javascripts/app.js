@@ -37,7 +37,7 @@ $(document).ready(function($) {
 			}, 500);
 		}
 	});
-	mapHandler.initMap();
+	mapHandler.init();
 });
 // to recenter the map
 // mapHandler.setCoords(lat, lon)
@@ -47,19 +47,22 @@ $(document).ready(function($) {
  * Should be enhanced to handle the layers, etc
  */
 var mapHandler = {
-	latitude: -1.788,
-	longitude: 53.571,
+	
+	latitude: 53.571,
+	longitude: -1.788,
 	map : null,
 	zoom: 13,
 	marker: new google.maps.Marker({
     	draggable: true
 	}),
+	
+	init: function() {
+		// request location will do so, then draw the maps afterwards
+		this.requestLocation();
+	},
+
 	// initialise the map and store the data
 	initMap: function () {
-
-		// try and get the location from the browser
-		this.requestLocation();
-		//console.log(mapHandler.latitude, mapHandler.longitude);
 		map = new google.maps.Map(document.getElementById("map"), {
 		     zoom: mapHandler.zoom,
 		     center: new google.maps.LatLng(mapHandler.latitude, mapHandler.longitude),
@@ -67,19 +70,20 @@ var mapHandler = {
 		     scaleControl: true,
 		     mapTypeControl: false,
 		     streetViewControl: false,
-		     keyboardShortcuts: false
+		     keyboardShortcuts: false,
+		     mapTypeId: google.maps.MapTypeId.ROADMAP
 		 });
 		 //this.marker.setPosition(map.getCenter());
 		 //this.marker.setMap(map);
 
 		 //request_crimes(mode);
 
-		 //google.maps.event.addListener(this.marker, "dragend", function() {
+		 google.maps.event.addListener(this.marker, "dragend", function() {
 		     
-		 //});
-		 //google.maps.event.addListener(map, "zoom_changed", function() {
+		 });
+		 google.maps.event.addListener(map, "zoom_changed", function() {
 		     
-		 //});
+		 });
 
 	 	//this.map = map;
 	},
@@ -110,14 +114,14 @@ var mapHandler = {
 		this.longitude = longitude;
 	},
 	locationDenied : function () {
+		console.log('denied');
+		mapHandler.init();
 		// do nothing
 	},
 	// we have the geo location, so we can see get the coords required
 	locationGranted : function (position) {
-		latitude = position.coords.latitude;
-  		longitude = position.coords.longitude;	
-  		
-  		// set the centre
-  		mapHandler.setCoords(latitude, longitude);
+		mapHandler.latitude = position.coords.latitude;
+  		mapHandler.longitude = position.coords.longitude;	
+  		mapHandler.initMap();
 	}
 };
