@@ -2,9 +2,11 @@ doctype 5
 html
   head
     title Spring Hack
+    link(rel='stylesheet', href='/stylesheets/reset.css')
+    link(rel='stylesheet', href='/stylesheets/layout.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='http://www.openlayers.org/api/OpenLayers.js')
-    //script(src='/javascripts/vendor/yepnope.min.js')
+    script(src='/javascripts/vendor/jquery.min.js')
     script(src='/javascripts/app.js')
-  body(onload='init();')
+  body
     block content
