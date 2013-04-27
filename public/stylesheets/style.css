@@ -18,7 +18,11 @@
 }
 #filter,
 #twitter {
+  overflow: auto;
   opacity: 0;
+  -webkit-box-shadow: 7px 0px 20px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 7px 0px 20px rgba(50, 50, 50, 0.75);
+  box-shadow: 7px 0px 20px rgba(50, 50, 50, 0.75);
 }
 #search {
   border-radius: 0.5em;
@@ -37,9 +41,6 @@
   margin-top: 0.25em;
   padding-left: 0;
   width: 85%;
-}
-#twitter {
-  overflow: auto;
 }
 .tweetCloud {
   display: block;
