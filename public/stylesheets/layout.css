@@ -22,6 +22,14 @@ body,
   width: 3em;
   height: 100%;
 }
+#nav-shadow {
+  position: absolute;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 3em;
+  height: 100%;
+}
 .filter,
 .twitter {
   width: 100%;
