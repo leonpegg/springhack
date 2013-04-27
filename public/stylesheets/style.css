@@ -1,6 +1,8 @@
-.search {
+.search,
+#search {
   background: yellow;
 }
-.twitter {
+.twitter,
+#twitter {
   background: blue;
 }

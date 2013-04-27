@@ -14,4 +14,19 @@ $(document).ready(function($) {
 	map.addLayer(markers);
 
 	map.setCenter(lonlat, zoom);
+	
+	$('.search').on('click', function () {
+		$('#search').animate({
+			width: '250px'
+		}, 500, function() {
+			// Animation complete.
+		});
+	});
+	$('.twitter').on('click', function () {
+		$('#twitter').animate({
+			width: '250px'
+		}, 500, function() {
+			// Animation complete.
+		});
+	});
 });
