@@ -1,0 +1,47 @@
+html,
+body,
+#map {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+.olControlZoom.olControlNoSelect {
+  left: inherit !important;
+  right: 8px;
+}
+.olControlAttribution.olControlNoSelect {
+  bottom: 3px;
+  right: 3px;
+}
+#nav {
+  position: absolute;
+  z-index: 1004;
+  left: 0;
+  top: 0;
+  width: 3em;
+  height: 100%;
+}
+.filter,
+.twitter {
+  width: 100%;
+  height: 50%;
+}
+#filter,
+#twitter {
+  position: absolute;
+  z-index: 1002;
+  top: 0;
+  left: 3em;
+  width: 0px;
+  height: 100%;
+}
+#search {
+  position: absolute;
+  z-index: 1002;
+  top: 0.5em;
+  left: 50%;
+  margin-left: -25%;
+  width: 50%;
+  height: 3em;
+}
