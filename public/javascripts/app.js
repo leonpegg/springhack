@@ -1,27 +1,41 @@
 $(document).ready(function($) {
 	$('.search').on('click', function () {
-	    $('#twitter').animate({
-	    	opacity: 0,
-	    	width: '0px' 
-	    }, 250);
-		$('#search').animate({
-			opacity: 1,
-			width: '250px'
-		}, 500, function() {
-			// Animation complete.
-		});
+		console.log($('#search').css('width'));
+	    if ($('#search').css('width') == '250px') {
+			$('#search').animate({
+				opacity: 0,
+				width: '0px'
+			}, 500);
+	    } else {
+			$('#twitter').animate({
+				opacity: 0,
+	    		width: '0px' 
+	    	}, 250);
+			$('#search').animate({
+				opacity: 1,
+				width: '250px'
+			}, 500, function() {
+				// Animation complete.
+			});
+	    }
 	});
+
 	$('.twitter').on('click', function () {
-		$('#search').animate({
-			opacity: 0,
-			width: '0px' 
-	    }, 250);
-		$('#twitter').animate({
-			opacity: 1,
-			width: '250px'
-		}, 500, function() {
-			// Animation complete.
-		});
+		if ($('#twitter').css('width') == '250px') {
+			$('#twitter').animate({
+				opacity: 0,
+				width: '0px' 
+			}, 250);
+		} else {
+			$('#search').animate({
+				opacity: 0,
+				width: '0px' 
+			}, 250);
+			$('#twitter').animate({
+				opacity: 1,
+				width: '250px'
+			}, 500);
+		}
 	});
 	mapHandler.initMap();
 });
