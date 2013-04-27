@@ -19,7 +19,7 @@ body,
   z-index: 1004;
   left: 0;
   top: 0;
-  width: 80px;
+  width: 3em;
   height: 100%;
 }
 .search,
@@ -30,9 +30,9 @@ body,
 #search,
 #twitter {
   position: absolute;
-  z-index: 1004;
+  z-index: 1002;
   top: 0;
-  left: 78px;
+  left: 3em;
   width: 0px;
   height: 100%;
 }
