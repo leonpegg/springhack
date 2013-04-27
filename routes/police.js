@@ -2,40 +2,68 @@ var http = require("http");
 var url = require("url");
 
 var baseUrl = 'data.police.uk';
-var basePAth = '/api/';
+var basePath = '/api/';
 
-exports.policeData = function(req, res) {
+exports.policeCrimeData = function(req, res) {
+	var latitude = req.params.latitude;
+	var longitude = req.params.longitude;
 	
-	var lat = req.query['latitude'];
-   	var lon = req.query['longitude'];
+	var options = {
+  		host: baseUrl,
+  		path: basePath+'crimes-street/all-crime?lat='+latitude+'&lng='+longitude
+	};    
+	
+	var body = '';
+	http.get(options, function(data) {
+	  		data.on("data", function(chunk) {
+  			body += chunk;
+  		});
+  		data.on("end", function() {
+  			//res.writeHead(200, {'Content-type': 'application/json'});
+  			res.setHeader('Content-type', 'application/json');
+  			res.send(body);		
+  		});
+	}).on('error', function(e) {
+  		console.log('ERROR: ' + e.message);
+	});
+}
+
+exports.policeNeighbourhoodData = function(req, res) {
+	
+	var latitude = req.params.latitude;
+	var longitude = req.params.longitude;
 	
 	var options = {
   		host: baseUrl,
   		path: basePath+'locate-neighbourhood?q='+latitude+','+longitude
 	};    
 	console.log(options);
+	var body = '';
 	http.get(options, function(data) {
   		data.on("data", function(chunk) {
   			body += chunk;
   		});
   		data.on("end", function() {
-  			var neightbourhood = body.neighbourhood;
-  			var force = body.force;
+  			var data = JSON.parse(body);
+  			console.log(body);
+  			var neighbourhood = data.neighbourhood;
+  			var force = data.force;
 
-  			getCrimeData(res, neighbourhood, force);
+  			getNeighbourhoodData(res, neighbourhood, force);
   		});
 	}).on('error', function(e) {
   		//console.log('ERROR: ' + e.message);
 	});
 }
 
-function getCrimeData(res, neightbourhood, force)
+function getNeighbourhoodData(res, neighbourhood, force)
 {
 	var options = {
   		host: baseUrl,
-  		path: basePath+force+'/'+neightbourhood+'/crime'
+  		path: basePath+force+'/'+neighbourhood
 	};
 
+	console.log(options);
 	body = '';
 	
 	http.get(options, function(data) {
