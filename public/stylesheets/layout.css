@@ -22,12 +22,12 @@ body,
   width: 3em;
   height: 100%;
 }
-.search,
+.filter,
 .twitter {
   width: 100%;
   height: 50%;
 }
-#search,
+#filter,
 #twitter {
   position: absolute;
   z-index: 1002;
