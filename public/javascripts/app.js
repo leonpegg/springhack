@@ -1,13 +1,18 @@
-map = new OpenLayers.Map("mapdiv", { displayProjection: epsg4326} );
-layerCloudMade = new OpenLayers.Layer.OSM("OSM CloudMade 'Pale dawn'",                                                   
-                                           ["http://a.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/998/256/${z}/${x}/${y}.png",
-                                            "http://b.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/998/256/${z}/${x}/${y}.png",
-                                            "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/998/256/${z}/${x}/${y}.png"]);
+function init() {
+map = new OpenLayers.Map("map");
+        var mapnik = new OpenLayers.Layer.OSM();
+        map.addLayer(mapnik);
 
-layerOJW = new OpenLayers.Layer.OSM("OJW tubes", "http://ojw.dev.openstreetmap.org/map/tiles/rail/${z}/${x}/${y}.png");
+        var lonlat = new OpenLayers.LonLat(-1.788, 53.571).transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator
+          );
 
-layerMapnik = new OpenLayers.Layer.OSM();
+        var zoom = 13;
 
-map.addLayer(layerMapnik);
-map.addLayer(layerCloudMade);
-map.addLayer(layerOJW);
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+        markers.addMarker(new OpenLayers.Marker(lonlat));
+
+        map.setCenter(lonlat, zoom);
+}
