@@ -7,13 +7,13 @@ html
     link(rel='stylesheet', href='/stylesheets/font-awesome.css')
     link(rel='stylesheet', href='/stylesheets/layout.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    // Vedor javascripts
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCClvuRbnarOxeBK7yc8qLOmKAEo3bWwsI&sensor=true&libraries=visualization')
     script(src='/javascripts/vendor/jquery.min.js')
-    //script(src='/javascripts/vendor/heatmap.js/heatmap.js')
-    //script(src='/javascripts/vendor/heatmap.js/heatmap-openlayers.js')
+    // Layer Kavascripts
+    script(src='/layers/police/crimes/crime.js')
+    // Application javascripts
     script(src='/javascripts/twitter.js')
     script(src='/javascripts/app.js')
-    script(src='/javascripts/crime.js')
-    //script(src='/bikes_layers/overlay.js')
   body
     block content
