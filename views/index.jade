@@ -3,10 +3,20 @@ extends layout
 block content
   #map
   #nav
-    .search
+    .filter
+      span.icon-filter
     .twitter
-  #search
+      span.icon-twitter
+  #filter
     form
       input#police(type='button', value='Police')
       #policeData
+      	#policeTotal
+
+      label Bikes
+        input#bikes(type='checkbox')
   #twitter
+  #search
+    form
+      label.icon-search
+        input(type='text')

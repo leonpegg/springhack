@@ -1,12 +1,21 @@
-.search,
-#search {
-  background: yellow;
+.filter,
+.twitter {
+  text-align: center;
+  padding-top: 0.5em;
+}
+.filter span,
+.twitter span {
+  font-size: 2em;
+}
+.filter,
+#filter {
+  background: #FCFF50;
 }
 .twitter,
 #twitter {
-  background: blue;
+  background: #9AE4E8;
 }
-#search,
+#filter,
 #twitter {
   opacity: 0;
 }
