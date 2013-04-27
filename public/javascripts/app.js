@@ -70,8 +70,8 @@ var mapHandler = {
 	},
 	// set the centre of a map
 	setCoords: function (lat, long) {
-		this.latitude = Lat;
-		this.longitude = Long;
+		this.latitude = lat;
+		this.longitude = long;
 		this.setCentre();
 	},
 	locationDenied : function () {
