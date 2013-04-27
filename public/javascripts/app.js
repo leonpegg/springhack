@@ -44,6 +44,8 @@ $(document).ready(function($) {
 		}
 	});
 	
+	twitter.updateTweets();
+	
 	mapHandler.init();
 });
 // to recenter the map

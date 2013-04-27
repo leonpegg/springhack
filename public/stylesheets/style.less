@@ -1,7 +1,8 @@
 .filter, .twitter {
 	text-align: center;
-	padding-top: 0.5em;
 	span {
+		display: block;
+		padding-top: 0.5em;
 		font-size: 2em;
 	}
 }
@@ -32,7 +33,13 @@
 		}
 	}
 }
-
+#twitter {
+	overflow: auto;
+}
+.tweetCloud {
+	display:block;
+	padding: 0.5em;
+}
 #policeData {
 	display: none;
 }
