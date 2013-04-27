@@ -1,5 +1,4 @@
 
-
 global.bikedata = {};
 /**
  * Module dependencies.
