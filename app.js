@@ -8,7 +8,6 @@ global.bikedata = {};
 var express = require('express')
   , routes = require('./routes')
   , police = require('./routes/police.js')
-  , twitter = require('./routes/twitter.js')
   , http = require('http')
   , path = require('path');
 
@@ -36,7 +35,6 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/data/police/crimes/:latitude/:longitude', police.policeCrimeData);
 app.get('/data/police/neighbourhood:latitude/:longitude', police.policeNeighbourhoodData);
-app.get('/data/twitter/:screenname', twitter.feed);
 app.get('/data/transport/bikes', routes.transportBikes);
 
 http.createServer(app).listen(app.get('port'), function(){
