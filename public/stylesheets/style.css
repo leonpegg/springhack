@@ -84,6 +84,7 @@ body {
 }
 #filter .filter-group .filter-options {
   display: none;
+  margin-top: 0.5em;
 }
 #tweets {
   overflow: auto;
