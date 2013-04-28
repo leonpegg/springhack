@@ -35,6 +35,7 @@ body {
 }
 #about {
   padding: 0.5em;
+  opacity: 0.8;
   border-radius: 0.5em;
   -webkit-box-shadow: 0px 1px 20px #323232;
   -moz-box-shadow: 0px 1px 20px #323232;
@@ -51,7 +52,7 @@ body {
   -moz-box-shadow: 0px 1px 20px #323232;
   box-shadow: 0px 1px 20px #323232;
   background: #776D6D;
-  opacity: 0.9;
+  opacity: 0.8;
   color: white;
   padding: 0.5em;
 }
