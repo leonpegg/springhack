@@ -40,14 +40,6 @@ category_order.push('other-theft');
 categories['other-crime'] = "Other crime";
 category_order.push('other-crime');
 
-$('document').ready( function () {
-    $('#police-crimes').on('click', function () {
-        initPoliceMap();
-        $(this).addClass('active');
-    });
-});
-
-
 /*
     Crime maps scripts from police.uk
     Modified for Newsquest
@@ -116,30 +108,7 @@ var category = "all-crime";
 var mode = "streets";
 var resize_timeout;
 var current_width = 0;
-// $(function() {
 
-//         $(".crimeTypes li").delegate("a", "click", function(b) { // list of crime types
-//             removeCrime("info_windows");
-//             b.preventDefault();
-//             $(".crimeTypes li a").removeClass("active");
-//             $(this).addClass("active");
-//             category = $(this).attr("rel");
-//             show_markers(category);
-//         });
-//         $(".crimeRoads").delegate("a", "click", function(b) { //list of streets
-//             b.preventDefault();
-//             show_crime_street($(this).attr("rel"), "left_panel");
-//         });
-//         $("#crimeMap").after('<a id="marker_control" title="Move the marker to the centre of the map"></a>');
-//         $("#marker_control").hide().live("click", function(b) {
-//             b.preventDefault();
-//             marker.setPosition(map.getCenter());
-//             circle.setCenter(map.getCenter());
-//             refresh_crimes_street = true;
-//             refresh_crimes_neighbourhood = true;
-//             request_crimes(mode)
-//         });
-// });
 function category_cmp(f, e) {
     var d = $.inArray(f, category_order);
     var g = $.inArray(e, category_order);
@@ -485,18 +454,18 @@ function show_markers(a) {
     });
 }
 function removeCrime(b) {
-  
     if (b == "markers") {
         for (i in markers) {
             markers[i].setMap(null)
         }
         markers.length = 0;
+        console.log('clear markers');
         if (cluster) {
             cluster.clearMarkers()
+            console.log("Clear cluster");
         }
     } else {
         if (b == "info_windows") {
-            $(".crimeRoads li a").removeClass("highlight");
             for (i in info_windows) {
                 try {
                     google.maps.event.clearInstanceListeners(info_windows[i]);
@@ -506,6 +475,7 @@ function removeCrime(b) {
             info_windows.length = 0
         }
     }
+    console.log(markers);
 };
 
 

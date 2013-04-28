@@ -49,7 +49,6 @@ $(document).ready(function($) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					mapHandler.setCenter(results[0].geometry.location);
 				} else {
-				
                 	alert('Geocode was not successful for the following reason: ' + status);
 				}
 			});
@@ -63,12 +62,11 @@ $(document).ready(function($) {
         $(this).toggleClass('active');
 
         if ($(this).hasClass('active')) {
-            console.log('init');
             initPoliceMap();
         } else {
-            console.log('remove');
-            remove();
-            remove('markers');
+            scroller.stop();
+            removeCrime('info_windows');
+            removeCrime('markers');
         }
     });
 
@@ -85,10 +83,10 @@ $(document).ready(function($) {
 			});
 		}
 	});
-	
+
 	twitter.screenname = 'tfltravelalerts';
 	twitter.updateTweets();
-	
+
 	mapHandler.init();
 });
 
