@@ -70,6 +70,19 @@ $(document).ready(function($) {
         }
     });
 
+    $('#police-info').on('click', function () {
+
+        $(this).toggleClass('active');
+
+        if ($(this).hasClass('active')) {
+            initNeighbourhood();
+        } else {
+            scroller.stop();
+            removeNeighbourhood();
+                
+        }
+    });
+
 	$('#transport-bikes').click(function() {
         $(this).toggleClass('active');
 		var active = $(this).hasClass('active');
@@ -84,6 +97,44 @@ $(document).ready(function($) {
 		}
 	});
 
+    var line_box = $('input#bus-route');
+    var remove_layer_fn = function() {
+        if (mapHandler && mapHandler.busLayers) {
+            var busLayers = mapHandler.busLayers;
+            mapHandler.busLayers = [];
+            $.each(busLayers, function(i, e) {
+                e.setMap(null);	//dunno if this works
+            });
+        }
+    };
+    var update_bus_fn = function() {
+        remove_layer_fn();
+        var url = 'data/transport/bus';
+        var line = line_box.val();
+        if (line) {
+            url += '?line=' + line;
+            addBusesToGoogleMap(url, mapHandler.map, mapHandler.busLayers);
+        }
+    };
+    line_box.keypress(function (e) {
+		if (e.which == 13) {
+            update_bus_fn();
+        }
+    });
+    
+	$('#transport-buses').click(function() {
+		$(this).toggleClass('active').parent().find('.filter-options').slideToggle();
+        // $(this).toggleClass('active');
+		var active = $(this).hasClass('active');
+
+		if (active) {
+            update_bus_fn();
+		}
+		else if (mapHandler.busLayers) {
+            remove_layer_fn();
+		}
+	});
+	
 	twitter.screenname = 'tfltravelalerts';
 	twitter.updateTweets();
 
@@ -107,6 +158,7 @@ var mapHandler = {
 	marker: new google.maps.Marker({
     	draggable: true
 	}),
+    busLayers: [],
 	
 	init: function() {
 		// request location will do so, then draw the maps afterwards
@@ -152,11 +204,11 @@ var mapHandler = {
                 name: "OpenStreetMap",
                 maxZoom: 18
             }));
-		 google.maps.event.addListener(this.marker, "dragend", function() {
-		     
+		 google.maps.event.addListener(this.map, "dragend", function() {
+            mapHandler.redrawData();
 		 });
 		 google.maps.event.addListener(this.map, "zoom_changed", function() {
-		     
+		     //console.log('zoom_changed');
 		 });
 
 	},
@@ -168,9 +220,8 @@ var mapHandler = {
 	// centre a map with either the defailt lang and long or the new ones
 	setCenter: function(location) {
 		// // set the center
-		console.log(this.map);
-		console.log(location);
 		this.map.setCenter(location);
+        this.redrawData();
 	},
 	getMarkers : function() {
 		// holder function
@@ -194,6 +245,21 @@ var mapHandler = {
     getCurrentCenter : function () {
         var center = this.map.getCenter();
         return [center.lat(), center.lng()];
+    },
+    redrawData : function() {
+        if ($('#police-crimes').hasClass('active')) {
+
+            $('#police-crimes').click();
+
+            setTimeout(function() {
+
+                $('#police-crimes').click();
+            }, 3000);
+
+        }
+        if ($('#police-info').hasClass('active')) {
+            $('#police-info').click().click();
+        }
     }
 };
 

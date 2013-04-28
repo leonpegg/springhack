@@ -203,18 +203,8 @@ function show_crime_street(g, a) {
 function initPoliceMap() {
     //resize_map();
     map = mapHandler.map;
-    
     request_crimes(mode);
-        
-    google.maps.event.addListener(marker, "dragend", function() {
-        refresh_crimes_street = true;
-        refresh_crimes_neighbourhood = true;
-        request_crimes(mode)
-    });
-    google.maps.event.addListener(map, "zoom_changed", function() {
-        removeCrime("info_windows")
-    })
-    
+
 }
 function request_crimes(a) {
     mode = a;
@@ -222,14 +212,14 @@ function request_crimes(a) {
     removeCrime("markers");
     removeCrime("info_windows");
 
-    circle.setMap(map);
-    circle.setCenter(marker.getPosition());
-    if (refresh_crimes_street) {
+    circle.setMap(mapHandler.map);
+    //circle.setCenter(marker.getPosition());
+    //if (refresh_crimes_street) {
         crimes_street()
-    } else {
-        crimes_street_roads();
-        show_markers(category)
-    }
+    //} else {
+    //    crimes_street_roads();
+    //    show_markers(category)
+    //}
 }
 
 function crimes_street() {
@@ -239,6 +229,7 @@ function crimes_street() {
     var a = circle_radius / 1609.344;
     var latLon = mapHandler.getCurrentCenter();
     var b = '/data/police/crimes/'+latLon[0]+'/'+latLon[1]; 
+    
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -459,10 +450,8 @@ function removeCrime(b) {
             markers[i].setMap(null)
         }
         markers.length = 0;
-        console.log('clear markers');
         if (cluster) {
             cluster.clearMarkers()
-            console.log("Clear cluster");
         }
     } else {
         if (b == "info_windows") {
@@ -475,31 +464,19 @@ function removeCrime(b) {
             info_windows.length = 0
         }
     }
-    console.log(markers);
 };
 
 
 /* Neighbourhood map */
-// var mapNeighbourhood;
-// var markerNeighbourhood = new google.maps.Marker({
-//     clickable: false
-// });
-// var station;
-// var kml_layer = null;
-// $(function () {
-//     setTimeout("initNeighbourhood(" + centre_lat + ", " + centre_lng + ")", 1000);
-    
-// });
+var mapNeighbourhood;
+var markerNeighbourhood = new google.maps.Marker({
+    clickable: false
+});
+var station;
+var kml_layer = null;
 
 // function initNeighbourhood(c, b) {
-//     mapNeighbourhood = new google.maps.Map(document.getElementById("crimeMapNeighbourhood"), {
-//         zoom: 14,
-//         center: new google.maps.LatLng(c, b),
-//         mapTypeId: google.maps.MapTypeId.ROADMAP,
-//         scrollwheel: false,
-//         mapTypeControl: false,
-//         streetViewControl: false
-//     });
+
 //     markerNeighbourhood.setPosition(mapNeighbourhood.getCenter());
 //     markerNeighbourhood.setMap(mapNeighbourhood);
 //     if (station) {
@@ -511,13 +488,54 @@ function removeCrime(b) {
 //             map.fitBounds(d)
 //         })
 //     }
-//     var a = "http://crimemapper2.s3.amazonaws.com/frontend/kmls/boundaries/" + force + "/" + neighbourhood + ".kml";
-//     kml_layer = new google.maps.KmlLayer(a, {
-//         map: mapNeighbourhood,
-//         suppressInfoWindows: true
-//     })
-// };
+// }
 
+function initNeighbourhood() {
+    var latLon = mapHandler.getCurrentCenter();
+    var b = '/data/police/neighbourhood/'+latLon[0]+'/'+latLon[1]; 
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: b,
+        success: function (data) {
+            addKml(data.neighbourhood, data.force);
+            initForceData(data.force);
+        }
+    });
+}
+
+function initForceData(force) {
+    var b = '/data/police/force/'+force; 
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: b,
+        success: function (data) {
+            $.each(data.engagement_methods, function (f, g) {
+                if (g.title.toLowerCase() == 'twitter') {
+                    var url = g.url.replace('twitter.com/', '');
+                    url = url.replace('www.', '');
+                    url = url.replace('http://', '');
+                    twitterName = url.replace('https://', '');
+                    twitter.screenname = twitterName;
+                    twitter.updateTweets();
+                }
+            });
+        }
+    });
+}
+
+function addKml(neighbourhood, force) {
+    var a = "http://crimemapper2.s3.amazonaws.com/frontend/kmls/boundaries/" + force + "/" + neighbourhood + ".kml";
+    kml_layer = new google.maps.KmlLayer(a, {
+        map: mapHandler.map,
+        suppressInfoWindows: true
+    })
+}
+
+function removeNeighbourhood() {
+    kml_layer.setMap(null);
+}
 
 /* Feeds */
 // $( function() {
