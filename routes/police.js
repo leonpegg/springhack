@@ -12,7 +12,7 @@ exports.policeCrimeData = function(req, res) {
   		host: baseUrl,
   		path: basePath+'crimes-street/all-crime?lat='+latitude+'&lng='+longitude
 	};    
-	
+	console.log(options);
 	var body = '';
 	http.get(options, function(data) {
 	  		data.on("data", function(chunk) {
@@ -42,14 +42,16 @@ exports.policeNeighbourhoodData = function(req, res) {
 	http.get(options, function(data) {
   		data.on("data", function(chunk) {
   			body += chunk;
+
   		});
   		data.on("end", function() {
-  			var data = JSON.parse(body);
-  			console.log(body);
-  			var neighbourhood = data.neighbourhood;
-  			var force = data.force;
+            res.send(body);
+  			// var data = JSON.parse(body);
+  			// console.log(body);
+  			// var neighbourhood = data.neighbourhood;
+  			// var force = data.force;
 
-  			getNeighbourhoodData(res, neighbourhood, force);
+  			// getNeighbourhoodData(res, neighbourhood, force);
   		});
 	}).on('error', function(e) {
   		//console.log('ERROR: ' + e.message);
@@ -76,6 +78,28 @@ function getNeighbourhoodData(res, neighbourhood, force)
 	}).on('error', function(e) {
   		//console.log('ERROR: ' + e.message);
 	});
+}
+
+exports.policeForceData = function (req, res) {
+    var force = req.params.force;
+    
+    var options = {
+        host: baseUrl,
+        path: basePath+'forces/'+force
+    };
+    console.log(options);
+    var body = '';
+    http.get(options, function(data) {
+        data.on("data", function(chunk) {
+            body += chunk;
+
+        });
+        data.on("end", function() {
+            res.send(body);
+        });
+    }).on('error', function(e) {
+        //console.log('ERROR: ' + e.message);
+    });
 }
 
 // exports.policeData = function(req, res) 
