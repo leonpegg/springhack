@@ -46,6 +46,7 @@ $(document).ready(function($) {
 					alert('Geocode was not successful for the following reason: ' + status);
 				}
 			});
+			$(this).blur();
 		}
 	});
 	
