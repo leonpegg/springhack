@@ -49,7 +49,8 @@ $(document).ready(function($) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					mapHandler.setCenter(results[0].geometry.location);
 				} else {
-					alert('Geocode was not successful for the following reason: ' + status);
+				
+                	alert('Geocode was not successful for the following reason: ' + status);
 				}
 			});
 			$(this).blur();
@@ -58,8 +59,17 @@ $(document).ready(function($) {
 
     // police click
     $('#police-crimes').on('click', function () {
-        initPoliceMap();
-        $(this).addClass('active');
+
+        $(this).toggleClass('active');
+
+        if ($(this).hasClass('active')) {
+            console.log('init');
+            initPoliceMap();
+        } else {
+            console.log('remove');
+            remove();
+            remove('markers');
+        }
     });
 	
 	twitter.screenname = 'tfltravelalerts';
@@ -67,6 +77,8 @@ $(document).ready(function($) {
 	
 	mapHandler.init();
 });
+
+
 // to recenter the map
 // mapHandler.setCoords(lat, lon)
 
@@ -141,19 +153,35 @@ var mapHandler = {
 		this.longitude = longitude;
 	},
 	locationDenied : function () {
-		console.log('denied');
 		mapHandler.init();
 		// do nothing
 	},
 	// we have the geo location, so we can see get the coords required
 	locationGranted : function (position) {
 		mapHandler.latitude = position.coords.latitude;
-  		mapHandler.longitude = position.coords.longitude;	
+  		mapHandler.longitude = position.coords.longitude;
   		mapHandler.initMap();
 	},
     getCurrentCenter : function () {
         var center = this.map.getCenter();
-        console.log(center);
         return [center.lat(), center.lng()];
     }
 };
+
+
+var scroller = {
+    running : false,
+    set: function (data) {
+        if (this.running) {
+            return;
+        }
+        // double the data
+        var m = $('<marquee></marquee>').html(data);
+        $('#info-box').html(m).show();
+
+        //$('#info-box').marquee();
+    },
+    stop: function () {
+        $("#info-box").html('').hide();
+    }
+}

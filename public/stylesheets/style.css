@@ -76,6 +76,11 @@ body {
   opacity: 0.8;
   color: white;
   padding: 0.5em;
+  white-space: nowrap;
+}
+#info-box p {
+  display: block;
+  float: left;
 }
 #filter .filter-group {
   display: block;
