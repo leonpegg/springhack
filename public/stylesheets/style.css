@@ -123,3 +123,6 @@ body {
   width: 20px;
   text-align: center;
 }
+marquee {
+  padding-top: 0.25em;
+}
