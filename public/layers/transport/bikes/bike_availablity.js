@@ -1,5 +1,5 @@
-/// <reference path="../../../../../frameworks_and_libraries/DefinitelyTyped/jquery/jquery.d.ts" />
-/// <reference path="../../../../../frameworks_and_libraries/DefinitelyTyped/googlemaps/google.maps.d.ts" />
+
+
 function addToMap(data, map, colours) {
     var options = {
         map: null,
@@ -13,66 +13,99 @@ function addToMap(data, map, colours) {
     };
     var heatmap = new google.maps.visualization.HeatmapLayer(options);
     heatmap.setMap(map);
+	return heatmap;
 }
-function initialize() {
-    var lat = 51.51104050;//51.5;//112139;
-    
-    var lng = -0.1137257;
-    var mapOptions = {
-        center: new google.maps.LatLng(lat, lng),
-        zoom: 13,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-    $.getJSON('livecyclehireupdates.json', null, function (json) {
+
+function addBikesToGoogleMap(bike_url, map) {
+
+	var layers = [];
+		
+    $.getJSON(bike_url, null, function (json) {
         var fewBikes = [];
         var fewSpaces = [];
         var safeSpaces = [];
+        var markers = [];
         var threshold = 3;
         $.each(json.stations.station, function (i, e) {
-            var location = new google.maps.LatLng(e.lat, e.long);
+            var location = new google.maps.LatLng(parseFloat(e.lat), parseFloat(e.long));
+
             var spaces = parseInt(e.nbEmptyDocks);
             var bikes = parseInt(e.nbBikes);
             var total = spaces + bikes;
+			var marker = new google.maps.Marker({
+				position: location,
+				icon: '/images/cycle-hire-pushpin-icon.gif'//,
+//				title: e.name
+			});
             if(bikes < threshold) {
                 var ins = {
                     location: location,
                     weight: threshold - bikes
                 };
                 fewBikes.push(ins);
-            } else if(spaces < threshold) {
+
+				// marker.setAnimation(google.maps.Animation.BOUNCE);
+			} else if(spaces < threshold) {
                 var ins = {
                     location: location,
                     weight: threshold - spaces
                 };
                 fewSpaces.push(ins);
+				// marker.setAnimation(google.maps.Animation.BOUNCE);
             } else {
                 //var ins = { location: location, weight: threshold - spaces };
                 safeSpaces.push(location);
             }
+			markers.push(marker);
+			layers.push(marker);
         });
         if(fewBikes.length > 0) {
-            addToMap(fewBikes, map, [
+            var heatmap = addToMap(fewBikes, map, [
                 'transparent', 
                 '#00FF00'
             ]);
+			layers.push(heatmap);
         }
         if(fewSpaces.length > 0) {
-            addToMap(fewSpaces, map, [
+            var heatmap = addToMap(fewSpaces, map, [
                 'transparent', 
                 '#FF0000'
             ]);
+			layers.push(heatmap);
         }
         if(safeSpaces.length > 0) {
-            addToMap(safeSpaces, map, [
+            var heatmap = addToMap(safeSpaces, map, [
                 'transparent', 
                 '#66ccff'
             ]);
+			layers.push(heatmap);
         }
-        if(console) {
-            console.log('fewBikes:', fewBikes.length, ', fewSpaces:', fewSpaces.length, ', safeSpaces:', safeSpaces.length);
-        }
+		
+		$.each(markers, function(i, e) {
+			e.setMap(map);
+		});
     });
+	
+	return layers;
 }
-google.maps.event.addDomListener(window, 'load', initialize);
-//@ sourceMappingURL=overlay.js.map
+
+function renderGoogleMap(checked) {
+	var map = mapHandler.map;
+	if (checked) {
+		mapHandler.bikeLayers = addBikesToGoogleMap('data/bikes', map);
+	}
+	else if (mapHandler.bikeLayers) {
+		$.each(mapHandler.bikeLayers, function(i, e) {
+			e.setMap(null);	//dunno if this works
+		});
+	}
+}
+
+$('document').ready(function() {
+	
+	$('input#transport-bikes').click(function() {
+		var checked = $(this).is(':checked');
+		renderGoogleMap(checked);
+	});
+});
+
