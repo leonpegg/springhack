@@ -33,20 +33,34 @@ function addBikesToGoogleMap(bike_url, map) {
             var bikes = parseInt(e.nbBikes);
             var total = spaces + bikes;
 			var title = e.name + '(bikes: ' + bikes + ', spaces: ' + spaces + ')'
-			var marker = new google.maps.Marker({
-				position: location,
-				icon: '/images/cycle-hire-pushpin-icon.gif',
-				title: title
-			});
+			var marker = null;
+
             if(bikes < threshold) {
+				marker = new MarkerWithLabel({
+					position: location,
+					icon: '/images/cycle-hire-pushpin-icon.gif',
+					title: title,
+					labelText: bikes,
+				   labelClass: "bike-labels-empty", // the CSS class for the label
+				   labelStyle: {top: "0px", left: "-10px", opacity: 0.75},
+				   labelVisible: true
+				});
+
                 var ins = {
                     location: location,
                     weight: threshold - bikes
                 };
                 fewBikes.push(ins);
-
-				// marker.setAnimation(google.maps.Animation.BOUNCE);
 			} else if(spaces < threshold) {
+				marker = new MarkerWithLabel({
+					position: location,
+					icon: '/images/cycle-hire-pushpin-icon.gif',
+					title: title,
+					labelText: bikes,
+				   labelClass: "bike-labels-full", // the CSS class for the label
+				   labelStyle: {top: "0px", left: "-10px", opacity: 0.75},
+				   labelVisible: true
+				});
                 var ins = {
                     location: location,
                     weight: threshold - spaces
@@ -54,6 +68,15 @@ function addBikesToGoogleMap(bike_url, map) {
                 fewSpaces.push(ins);
 				// marker.setAnimation(google.maps.Animation.BOUNCE);
             } else {
+				marker = new MarkerWithLabel({
+					position: location,
+					icon: '/images/cycle-hire-pushpin-icon.gif',
+					title: title,
+					labelText: bikes,
+				   labelClass: "bike-labels", // the CSS class for the label
+				   labelStyle: {top: "0px", left: "-10px", opacity: 0.75},
+				   labelVisible: true
+				});
                 //var ins = { location: location, weight: threshold - spaces };
                 safeSpaces.push(location);
             }
