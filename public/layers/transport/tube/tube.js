@@ -301,7 +301,7 @@ var layerTube = {
 		[-0.17921,51.6306,"TOT","Totteridge and Whetstone"],
 		[0.00825,51.51383,"cat","Canning Town DLR Station"],
 		[-0.19279,51.50106,"HST","High Street Kensington"],
-		[-0.19252,51.60093,"FYC","Finchley Central"],
+		[-0.19252,51.60093,"FYC","Finchley Central"]],
 	options: {},
 	renderLayer: function () {
 		// render the layer
