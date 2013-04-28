@@ -1,5 +1,4 @@
-global.twitterdata = {};
-global.twitterdata.data = {};
+global.tubedata = {};
 global.bikedata = {};
 global.buslocations = {};
 /**
@@ -9,6 +8,7 @@ global.buslocations = {};
 var express = require('express')
   , routes = require('./routes')
   , police = require('./routes/police.js')
+  , tubes = require('./routes/tubes.js')
   , http = require('http')
   , path = require('path');
 
@@ -39,6 +39,7 @@ app.get('/data/police/neighbourhood/:latitude/:longitude', police.policeNeighbou
 app.get('/data/police/force/:force', police.policeForceData);
 app.get('/data/police/force/:force/:neighbourhood', police.policeTeam);
 app.get('/data/transport/bikes', routes.transportBikes);
+app.get('/data/transport/tubes/performance', tubes.performance);
 app.get('/data/transport/bus', routes.transportBus);
 
 http.createServer(app).listen(app.get('port'), function(){
