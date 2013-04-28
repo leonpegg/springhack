@@ -53,6 +53,9 @@
   padding: 0.5em;
   border-bottom: dashed 1px gray;
 }
+#filter .filter-group .filter-options {
+  display: none;
+}
 .tweetCloud {
   display: block;
   padding: 0.5em;
