@@ -1,5 +1,6 @@
 
 global.bikedata = {};
+global.buslocations = {};
 /**
  * Module dependencies.
  */
@@ -35,6 +36,7 @@ app.get('/', routes.index);
 app.get('/data/police/crimes/:latitude/:longitude', police.policeCrimeData);
 app.get('/data/police/neighbourhood:latitude/:longitude', police.policeNeighbourhoodData);
 app.get('/data/transport/bikes', routes.transportBikes);
+app.get('/data/transport/bus', routes.transportBus);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
