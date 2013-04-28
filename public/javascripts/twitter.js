@@ -6,9 +6,10 @@ var twitter = {
         	dataType: 'jsonp',
         	url: this.url + '&screen_name=' + this.screenname,
         	success: function (data) {
-	        	$('#twitter').html('');
+	        	$('#tweets').html('');
             	$.each(data, function (i, item) {
                 	$("#twitter").append("<div class='tweetCloud'><div id='tweetArrow'></div><div id='tweetText'>" + item.text + "</div></div>");
+                	$('#twitter').highlightRegex("@([A-Za-z0-9_]+)");
                 })
             }
         });
