@@ -304,12 +304,22 @@ var layerTube = {
 		[-0.19252,51.60093,"FYC","Finchley Central"]],
 	options: {},
 	renderLayer: function () {
+		//console.log('render start');
+		this.stationMarkers.forEach(function(item) {
+			//console.log('marker');
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(item[1],item[0]),
+      			map: mapHandler.map,
+      			title:item[2]+' - '+item[3]
+      		});
+      	});
 		// render the layer
 	}
 }
 
 $(function () {
 $('#transport-tubes').on('click', function () {
-	$(this).toggleClass('active').parent().find('.filter-options').slideToggle();
+	$(this).toggleClass('active').parent(); //.find('.filter-options').slideToggle();
+	layerTube.renderLayer();
 });
 });
