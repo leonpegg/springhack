@@ -41,7 +41,8 @@ categories['other-crime'] = "Other crime";
 category_order.push('other-crime');
 
 $('document').ready( function () {
-    $('#police').on('click', function () {
+    $('#police-crimes').on('click', function () {
+        console.log('police');
         initPoliceMap();
     });
 });
