@@ -303,13 +303,34 @@ var layerTube = {
 		[-0.19279,51.50106,"HST","High Street Kensington"],
 		[-0.19252,51.60093,"FYC","Finchley Central"]],
 	options: {},
+	gMarkers: [],
 	renderLayer: function () {
+		//console.log('render start');
+		this.stationMarkers.forEach(function(item) {
+			//console.log('marker');
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(item[1],item[0]),
+      			map: mapHandler.map,
+      			title:item[2]+' - '+item[3]
+      		});
+      		layerTube.gMarkers.push(marker);
+      	});
 		// render the layer
+	},
+	removeLayer: function () {
+		for (i in this.gMarkers) {
+            layerTube.gMarkers[i].setMap(null);
+        }
 	}
 }
 
 $(function () {
 $('#transport-tubes').on('click', function () {
-	$(this).toggleClass('active').parent().find('.filter-options').slideToggle();
+	$(this).toggleClass('active').parent(); //.find('.filter-options').slideToggle();
+	if ($(this).hasClass('active')) {
+		layerTube.renderLayer();
+	} else {
+		layerTube.removeLayer();
+	}
 });
 });

@@ -14,11 +14,11 @@ body {
 }
 .filter,
 #filter {
-  background: #F4F3F0;
+  background: #F1EEE8;
 }
 .twitter,
 #twitter {
-  background: #EBE6DC;
+  background: #DDDDDC;
 }
 #filter,
 #twitter {
@@ -40,7 +40,7 @@ body {
   -webkit-box-shadow: 0px 1px 20px #323232;
   -moz-box-shadow: 0px 1px 20px #323232;
   box-shadow: 0px 1px 20px #323232;
-  background: #776D6D;
+  background: #A0A0A0;
 }
 #about a {
   text-decoration: none;
@@ -51,7 +51,7 @@ body {
   -webkit-box-shadow: 0px 1px 20px #323232;
   -moz-box-shadow: 0px 1px 20px #323232;
   box-shadow: 0px 1px 20px #323232;
-  background: #776D6D;
+  background: #A0A0A0;
   opacity: 0.8;
   color: white;
   padding: 0.5em;
@@ -73,7 +73,7 @@ body {
   -webkit-box-shadow: 0px 1px 20px #323232;
   -moz-box-shadow: 0px 1px 20px #323232;
   box-shadow: 0px 1px 20px #323232;
-  background: #776D6D;
+  background: #A0A0A0;
   opacity: 0.8;
   color: white;
   padding: 0.5em;
@@ -82,6 +82,12 @@ body {
 #info-box p {
   display: block;
   float: left;
+}
+#filter .filter-catagory {
+  padding: 0.5em;
+  padding-bottom: 0;
+  text-align: center;
+  font-weight: bolder;
 }
 #filter .filter-group {
   display: block;
