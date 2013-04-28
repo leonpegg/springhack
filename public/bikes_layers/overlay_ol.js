@@ -127,20 +127,20 @@ function addBikesToGoogleMap(bike_url, map) {
                 };
                 fewBikes.push(ins);
 
-				marker.setAnimation(google.maps.Animation.BOUNCE);
+				// marker.setAnimation(google.maps.Animation.BOUNCE);
 			} else if(spaces < threshold) {
                 var ins = {
                     location: location,
                     weight: threshold - spaces
                 };
                 fewSpaces.push(ins);
-				marker.setAnimation(google.maps.Animation.BOUNCE);
+				// marker.setAnimation(google.maps.Animation.BOUNCE);
             } else {
                 //var ins = { location: location, weight: threshold - spaces };
                 safeSpaces.push(location);
             }
-			layers.push(marker);
 			markers.push(marker);
+			layers.push(marker);
         });
         if(fewBikes.length > 0) {
             var heatmap = addToMap(fewBikes, map, [
