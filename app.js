@@ -1,4 +1,5 @@
-
+global.twitterdata = {};
+global.twitterdata.data = {};
 global.bikedata = {};
 global.buslocations = {};
 /**

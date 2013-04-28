@@ -49,7 +49,7 @@ $(document).ready(function($) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					mapHandler.setCenter(results[0].geometry.location);
 				} else {
-					alert('Geocode was not successful for the following reason: ' + status);
+                	alert('Geocode was not successful for the following reason: ' + status);
 				}
 			});
 			$(this).blur();
@@ -58,8 +58,16 @@ $(document).ready(function($) {
 
     // police click
     $('#police-crimes').on('click', function () {
-        initPoliceMap();
-        $(this).addClass('active');
+
+        $(this).toggleClass('active');
+
+        if ($(this).hasClass('active')) {
+            initPoliceMap();
+        } else {
+            scroller.stop();
+            removeCrime('info_windows');
+            removeCrime('markers');
+        }
     });
 
 	$('#transport-bikes').click(function() {
@@ -75,7 +83,7 @@ $(document).ready(function($) {
 			});
 		}
 	});
-	
+
     var line_box = $('input#bus-route');
     var remove_layer_fn = function() {
         if (mapHandler && mapHandler.busLayers) {
@@ -116,9 +124,11 @@ $(document).ready(function($) {
 	
 	twitter.screenname = 'tfltravelalerts';
 	twitter.updateTweets();
-	
+
 	mapHandler.init();
 });
+
+
 // to recenter the map
 // mapHandler.setCoords(lat, lon)
 
@@ -144,6 +154,12 @@ var mapHandler = {
 
 	// initialise the map and store the data
 	initMap: function () {
+		var mapTypeIds = [];
+        for(var type in google.maps.MapTypeId) {
+            mapTypeIds.push(google.maps.MapTypeId[type]);
+        }
+        mapTypeIds.push("OSM");
+        
 		this.map = new google.maps.Map(document.getElementById("map"), {
 		     zoom: mapHandler.zoom,
 		     center: new google.maps.LatLng(mapHandler.latitude, mapHandler.longitude),
@@ -161,9 +177,20 @@ var mapHandler = {
 			 zoomControlOptions: {
 				 style: google.maps.ZoomControlStyle.LARGE,
 				 position: google.maps.ControlPosition.RIGHT_TOP
-			 }
+			 },
+			 mapTypeId: "OSM",
+             mapTypeControlOptions: {
+                 mapTypeIds: mapTypeIds
+             }
 		 });
-		 
+		  this.map.mapTypes.set("OSM", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "OpenStreetMap",
+                maxZoom: 18
+            }));
 		 google.maps.event.addListener(this.marker, "dragend", function() {
 		     
 		 });
@@ -194,19 +221,35 @@ var mapHandler = {
 		this.longitude = longitude;
 	},
 	locationDenied : function () {
-		console.log('denied');
 		mapHandler.init();
 		// do nothing
 	},
 	// we have the geo location, so we can see get the coords required
 	locationGranted : function (position) {
 		mapHandler.latitude = position.coords.latitude;
-  		mapHandler.longitude = position.coords.longitude;	
+  		mapHandler.longitude = position.coords.longitude;
   		mapHandler.initMap();
 	},
     getCurrentCenter : function () {
         var center = this.map.getCenter();
-        console.log(center);
         return [center.lat(), center.lng()];
     }
 };
+
+
+var scroller = {
+    running : false,
+    set: function (data) {
+        if (this.running) {
+            return;
+        }
+        // double the data
+        var m = $('<marquee></marquee>').html(data);
+        $('#info-box').html(m).show();
+
+        //$('#info-box').marquee();
+    },
+    stop: function () {
+        $("#info-box").html('').hide();
+    }
+}

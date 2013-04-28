@@ -40,13 +40,6 @@ category_order.push('other-theft');
 categories['other-crime'] = "Other crime";
 category_order.push('other-crime');
 
-$('document').ready( function () {
-    $('#police-crimes').on('click', function () {
-        initPoliceMap();
-    });
-});
-
-
 /*
     Crime maps scripts from police.uk
     Modified for Newsquest
@@ -115,30 +108,7 @@ var category = "all-crime";
 var mode = "streets";
 var resize_timeout;
 var current_width = 0;
-// $(function() {
 
-//         $(".crimeTypes li").delegate("a", "click", function(b) { // list of crime types
-//             remove("info_windows");
-//             b.preventDefault();
-//             $(".crimeTypes li a").removeClass("active");
-//             $(this).addClass("active");
-//             category = $(this).attr("rel");
-//             show_markers(category);
-//         });
-//         $(".crimeRoads").delegate("a", "click", function(b) { //list of streets
-//             b.preventDefault();
-//             show_crime_street($(this).attr("rel"), "left_panel");
-//         });
-//         $("#crimeMap").after('<a id="marker_control" title="Move the marker to the centre of the map"></a>');
-//         $("#marker_control").hide().live("click", function(b) {
-//             b.preventDefault();
-//             marker.setPosition(map.getCenter());
-//             circle.setCenter(map.getCenter());
-//             refresh_crimes_street = true;
-//             refresh_crimes_neighbourhood = true;
-//             request_crimes(mode)
-//         });
-// });
 function category_cmp(f, e) {
     var d = $.inArray(f, category_order);
     var g = $.inArray(e, category_order);
@@ -181,7 +151,7 @@ function sort_streets(g) {
     return d
 }
 function show_crime_street(g, a) {
-    remove("info_windows");
+    removeCrime("info_windows");
     var e = streets[$.inArray(g.toString(), street_ids)];
     var h = '<div class="popup"><h2 style="font-size:123.1%; margin-bottom: 1em; margin-right:20px;">' + e.details.name + ' <sup style="color:#888; font-size:60%; font-weight:normal;">&dagger;</sup></h2><table style="border:0; border-collapse:collapse; overflow:visible; width:100%;"><tr><th style="background:#EFF5FF; color:#888; padding:4px 16px 4px 8px; text-align:left;">Crime type</th><th style="background:#EFF5FF; color:#888; padding:4px 8px 4px 8px; text-align:center;">Total</th></tr>';
     var f = new Object();
@@ -204,7 +174,7 @@ function show_crime_street(g, a) {
     });
     var k = sort_categories(f);
     $.each(k, function(l, m) {
-        h += '<tr><td style="border-top:1px solid #D3D5D7; padding:4px 16px 4px 8px;"><span class="' + l + '">' + categories[l] + '</span>' + categories[l];
+        h += '<tr><td style="border-top:1px solid #D3D5D7; padding:4px 16px 4px 8px;"><span class="' + l + '">' + categories[l] + '</span>';
         h += '</td><td style="border-top:1px solid #D3D5D7; padding:4px 8px 4px 8px; text-align:center;">' + m.total + "</td></tr>"
     });
     h += '</table><p style="color:#999; line-height:110%; margin-top:1.5em; margin-bottom:0;"><small style="font-size:85%;"><sup style="font-size:77%">&dagger;</sup> <span style="font-style:italic;">To protect privacy, crimes are mapped to points on or near the road where they occurred.</span></small></p></div>';
@@ -226,7 +196,7 @@ function show_crime_street(g, a) {
         $(".crimeRoads li a[rel=" + g + "]").addClass("highlight")
     });
     google.maps.event.addListener(b, "closeclick", function() {
-        remove("info_windows")
+        removeCrime("info_windows")
     })
 }
 
@@ -242,23 +212,21 @@ function initPoliceMap() {
         request_crimes(mode)
     });
     google.maps.event.addListener(map, "zoom_changed", function() {
-        remove("info_windows")
+        removeCrime("info_windows")
     })
     
 }
 function request_crimes(a) {
     mode = a;
     $(".crimeLoad").show();
-    remove("markers");
-    remove("info_windows");
+    removeCrime("markers");
+    removeCrime("info_windows");
 
     circle.setMap(map);
     circle.setCenter(marker.getPosition());
     if (refresh_crimes_street) {
         crimes_street()
     } else {
-        console.log('refresh_crimes_street FALSE');
-        $(".all-crime a").trigger("click");
         crimes_street_roads();
         show_markers(category)
     }
@@ -326,12 +294,14 @@ function crimes_street() {
             $.each(category_totals, function(f, g) {
                 $("." + f + " a span").html(g)
             });
+            var html = '';
             $.each(category_totals, function(catName, catVal) {
                 var realName = categories[catName];
-                var d = $('<div></div>').html(realName+':'+catVal);
 
-                $('#policeData').append(d).show();
+                html += realName+' ('+catVal+' reported) &nbsp; ';
+
             });
+            scroller.set(html);
 
             $("#policeTotal").html(all_total+" crimes detected locally");
             
@@ -438,7 +408,7 @@ function add_marker(b, d) {
     markers.push(a)
 }
 function show_markers(a) { 
-    remove("markers");
+    removeCrime("markers");
     var b = $(".crimeTypes");
     var d = new Object();
     total_crimes = 0;
@@ -483,18 +453,19 @@ function show_markers(a) {
         styles: marker_icons[a]
     });
 }
-function remove(b) {
+function removeCrime(b) {
     if (b == "markers") {
         for (i in markers) {
             markers[i].setMap(null)
         }
         markers.length = 0;
+        console.log('clear markers');
         if (cluster) {
             cluster.clearMarkers()
+            console.log("Clear cluster");
         }
     } else {
         if (b == "info_windows") {
-            $(".crimeRoads li a").removeClass("highlight");
             for (i in info_windows) {
                 try {
                     google.maps.event.clearInstanceListeners(info_windows[i]);
@@ -504,6 +475,7 @@ function remove(b) {
             info_windows.length = 0
         }
     }
+    console.log(markers);
 };
 
 
