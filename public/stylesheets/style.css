@@ -1,3 +1,6 @@
+body {
+  font-family: 'Vollkorn';
+}
 .filter,
 .twitter {
   text-align: center;
@@ -29,6 +32,18 @@
   -webkit-box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.75);
   -moz-box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.75);
   box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.75);
+}
+#about {
+  padding: 0.5em;
+  border-radius: 0.5em;
+  -webkit-box-shadow: 0px 1px 20px #323232;
+  -moz-box-shadow: 0px 1px 20px #323232;
+  box-shadow: 0px 1px 20px #323232;
+  background: #776D6D;
+}
+#about a {
+  text-decoration: none;
+  color: white;
 }
 #search {
   border-radius: 0.5em;
