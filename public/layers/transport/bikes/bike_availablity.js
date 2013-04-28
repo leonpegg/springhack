@@ -83,27 +83,27 @@ function addBikesToGoogleMap(bike_url, map) {
 			markers.push(marker);
 			layers.push(marker);
         });
-        if(fewBikes.length > 0) {
-            var heatmap = addToMap(fewBikes, map, [
-                'transparent', 
-                '#00FF00'
-            ]);
-			layers.push(heatmap);
-        }
-        if(fewSpaces.length > 0) {
-            var heatmap = addToMap(fewSpaces, map, [
-                'transparent', 
-                '#FF0000'
-            ]);
-			layers.push(heatmap);
-        }
-        if(safeSpaces.length > 0) {
-            var heatmap = addToMap(safeSpaces, map, [
-                'transparent', 
-                '#66ccff'
-            ]);
-			layers.push(heatmap);
-        }
+        // if(fewBikes.length > 0) {
+            // var heatmap = addToMap(fewBikes, map, [
+                // 'transparent', 
+                // '#00FF00'
+            // ]);
+			// layers.push(heatmap);
+        // }
+        // if(fewSpaces.length > 0) {
+            // var heatmap = addToMap(fewSpaces, map, [
+                // 'transparent', 
+                // '#FF0000'
+            // ]);
+			// layers.push(heatmap);
+        // }
+        // if(safeSpaces.length > 0) {
+            // var heatmap = addToMap(safeSpaces, map, [
+                // 'transparent', 
+                // '#66ccff'
+            // ]);
+			// layers.push(heatmap);
+        // }
 		
 		$.each(markers, function(i, e) {
 			e.setMap(map);
