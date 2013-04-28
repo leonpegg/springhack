@@ -304,23 +304,43 @@ var layerTube = {
 		[-0.19252,51.60093,"FYC","Finchley Central"]],
 	options: {},
 	gMarkers: [],
+	performance: [],
 	renderLayer: function () {
 		//console.log('render start');
-		this.stationMarkers.forEach(function(item) {
+		var i = 0;
+		$.getJSON('/data/transport/tubes/performance', function(data) {
+			//console.log(data);
+			layerTube.performance = data;
+			
+		layerTube.stationMarkers.forEach(function(item) {
+			//console.log(layerTube.performance);
 			//console.log('marker');
-			var marker = new google.maps.Marker({
+			//console.log(layerTube.performance[i][0].split(':')[1] + ' ' + layerTube.performance[i][1]);
+			var marker = new MarkerWithLabel({
 				position: new google.maps.LatLng(item[1],item[0]),
-      			map: mapHandler.map,
-      			title:item[2]+' - '+item[3]
-      		});
+     			map: mapHandler.map,
+      			title:item[2]+' - '+item[3],
+      			labelText: ' ',
+				labelStyle: {top: "-0.5em", left: '-0.5em',width: '1em', height:'1em',opacity: 0.75, background: layerTube.performance[item[2]], 'border-radius': '1em'},
+				labelVisible: true,
+				icon: '/images/1x1-pixel.png'
+			});
+			//console.log(item[2].toUpperCase());
+			//console.log(layerTube.performance[item[2].toUpperCase()]);
       		layerTube.gMarkers.push(marker);
+      		i++;
       	});
+			
+		});
 		// render the layer
 	},
 	removeLayer: function () {
 		for (i in this.gMarkers) {
             layerTube.gMarkers[i].setMap(null);
         }
+	},
+	getNetworkPreformance: function () {
+		
 	}
 }
 

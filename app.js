@@ -1,5 +1,4 @@
-global.twitterdata = {};
-global.twitterdata.data = {};
+global.tubedata = {};
 global.bikedata = {};
 /**
  * Module dependencies.
@@ -8,6 +7,7 @@ global.bikedata = {};
 var express = require('express')
   , routes = require('./routes')
   , police = require('./routes/police.js')
+  , tubes = require('./routes/tubes.js')
   , http = require('http')
   , path = require('path');
 
@@ -36,6 +36,7 @@ app.get('/', routes.index);
 app.get('/data/police/crimes/:latitude/:longitude', police.policeCrimeData);
 app.get('/data/police/neighbourhood:latitude/:longitude', police.policeNeighbourhoodData);
 app.get('/data/transport/bikes', routes.transportBikes);
+app.get('/data/transport/tubes/performance', tubes.performance);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
