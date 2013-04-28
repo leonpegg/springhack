@@ -33,20 +33,34 @@ function addBikesToGoogleMap(bike_url, map) {
             var bikes = parseInt(e.nbBikes);
             var total = spaces + bikes;
 			var title = e.name + '(bikes: ' + bikes + ', spaces: ' + spaces + ')'
-			var marker = new google.maps.Marker({
-				position: location,
-				icon: '/images/cycle-hire-pushpin-icon.gif',
-				title: title
-			});
+			var marker = null;
+
             if(bikes < threshold) {
+				marker = new MarkerWithLabel({
+					position: location,
+					icon: '/images/cycle-hire-pushpin-icon.gif',
+					title: title,
+					labelText: bikes,
+				   labelClass: "bike-labels-empty", // the CSS class for the label
+				   labelStyle: {top: "0px", left: "-10px", opacity: 0.75},
+				   labelVisible: true
+				});
+
                 var ins = {
                     location: location,
                     weight: threshold - bikes
                 };
                 fewBikes.push(ins);
-
-				// marker.setAnimation(google.maps.Animation.BOUNCE);
 			} else if(spaces < threshold) {
+				marker = new MarkerWithLabel({
+					position: location,
+					icon: '/images/cycle-hire-pushpin-icon.gif',
+					title: title,
+					labelText: bikes,
+				   labelClass: "bike-labels-full", // the CSS class for the label
+				   labelStyle: {top: "0px", left: "-10px", opacity: 0.75},
+				   labelVisible: true
+				});
                 var ins = {
                     location: location,
                     weight: threshold - spaces
@@ -54,33 +68,42 @@ function addBikesToGoogleMap(bike_url, map) {
                 fewSpaces.push(ins);
 				// marker.setAnimation(google.maps.Animation.BOUNCE);
             } else {
+				marker = new MarkerWithLabel({
+					position: location,
+					icon: '/images/cycle-hire-pushpin-icon.gif',
+					title: title,
+					labelText: bikes,
+				   labelClass: "bike-labels", // the CSS class for the label
+				   labelStyle: {top: "0px", left: "-10px", opacity: 0.75},
+				   labelVisible: true
+				});
                 //var ins = { location: location, weight: threshold - spaces };
                 safeSpaces.push(location);
             }
 			markers.push(marker);
 			layers.push(marker);
         });
-        if(fewBikes.length > 0) {
-            var heatmap = addToMap(fewBikes, map, [
-                'transparent', 
-                '#00FF00'
-            ]);
-			layers.push(heatmap);
-        }
-        if(fewSpaces.length > 0) {
-            var heatmap = addToMap(fewSpaces, map, [
-                'transparent', 
-                '#FF0000'
-            ]);
-			layers.push(heatmap);
-        }
-        if(safeSpaces.length > 0) {
-            var heatmap = addToMap(safeSpaces, map, [
-                'transparent', 
-                '#66ccff'
-            ]);
-			layers.push(heatmap);
-        }
+        // if(fewBikes.length > 0) {
+            // var heatmap = addToMap(fewBikes, map, [
+                // 'transparent', 
+                // '#00FF00'
+            // ]);
+			// layers.push(heatmap);
+        // }
+        // if(fewSpaces.length > 0) {
+            // var heatmap = addToMap(fewSpaces, map, [
+                // 'transparent', 
+                // '#FF0000'
+            // ]);
+			// layers.push(heatmap);
+        // }
+        // if(safeSpaces.length > 0) {
+            // var heatmap = addToMap(safeSpaces, map, [
+                // 'transparent', 
+                // '#66ccff'
+            // ]);
+			// layers.push(heatmap);
+        // }
 		
 		$.each(markers, function(i, e) {
 			e.setMap(map);
@@ -92,21 +115,4 @@ function addBikesToGoogleMap(bike_url, map) {
 
 function renderGoogleMap(checked) {
 	var map = mapHandler.map;
-	if (checked) {
-		mapHandler.bikeLayers = addBikesToGoogleMap('data/bikes', map);
-	}
-	else if (mapHandler.bikeLayers) {
-		$.each(mapHandler.bikeLayers, function(i, e) {
-			e.setMap(null);	//dunno if this works
-		});
-	}
 }
-
-$('document').ready(function() {
-	
-	$('input#transport-bikes').click(function() {
-		var checked = $(this).is(':checked');
-		renderGoogleMap(checked);
-	});
-});
-

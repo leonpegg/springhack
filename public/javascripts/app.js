@@ -71,6 +71,20 @@ $(document).ready(function($) {
             remove('markers');
         }
     });
+
+	$('#transport-bikes').click(function() {
+        $(this).toggleClass('active');
+		var active = $(this).hasClass('active');
+		var map = mapHandler.map;
+		if (active) {
+			mapHandler.bikeLayers = addBikesToGoogleMap('data/transport/bikes', map);
+		}
+		else if (mapHandler.bikeLayers) {
+			$.each(mapHandler.bikeLayers, function(i, e) {
+				e.setMap(null);	//dunno if this works
+			});
+		}
+	});
 	
 	twitter.screenname = 'tfltravelalerts';
 	twitter.updateTweets();
@@ -103,6 +117,12 @@ var mapHandler = {
 
 	// initialise the map and store the data
 	initMap: function () {
+		var mapTypeIds = [];
+        for(var type in google.maps.MapTypeId) {
+            mapTypeIds.push(google.maps.MapTypeId[type]);
+        }
+        mapTypeIds.push("OSM");
+        
 		this.map = new google.maps.Map(document.getElementById("map"), {
 		     zoom: mapHandler.zoom,
 		     center: new google.maps.LatLng(mapHandler.latitude, mapHandler.longitude),
@@ -120,9 +140,20 @@ var mapHandler = {
 			 zoomControlOptions: {
 				 style: google.maps.ZoomControlStyle.LARGE,
 				 position: google.maps.ControlPosition.RIGHT_TOP
-			 }
+			 },
+			 mapTypeId: "OSM",
+             mapTypeControlOptions: {
+                 mapTypeIds: mapTypeIds
+             }
 		 });
-		 
+		  this.map.mapTypes.set("OSM", new google.maps.ImageMapType({
+                getTileUrl: function(coord, zoom) {
+                    return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                },
+                tileSize: new google.maps.Size(256, 256),
+                name: "OpenStreetMap",
+                maxZoom: 18
+            }));
 		 google.maps.event.addListener(this.marker, "dragend", function() {
 		     
 		 });
