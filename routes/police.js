@@ -102,6 +102,28 @@ exports.policeForceData = function (req, res) {
     });
 }
 
+exports.policeTeam = function(req, res) {
+    var force = req.params.force;
+    var neighbourhood = req.params.neighbourhood;
+    var options = {
+        host: baseUrl,
+        path: basePath+force+'/'+neighbourhood+'/people'
+    };
+    console.log(options);
+    var body = '';
+    http.get(options, function(data) {
+        data.on("data", function(chunk) {
+            body += chunk;
+
+        });
+        data.on("end", function() {
+            res.send(body);
+        });
+    }).on('error', function(e) {
+        //console.log('ERROR: ' + e.message);
+    });
+}
+
 // exports.policeData = function(req, res) 
 // 	var options = {
 //   		host: 'data.police.uk',

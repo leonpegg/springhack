@@ -506,13 +506,19 @@ function initNeighbourhood() {
 }
 
 function getPoliceTeam(neighbourhood, force) {
+    
     var b = '/data/police/force/'+force+'/'+neighbourhood; 
     $.ajax({
         type: "GET",
         dataType: "json",
         url: b,
         success: function (data) {
-            console.log(data);
+            
+            var h = 'Your local team: ';
+            $.each(data, function (f, g) {
+                h += g.rank+' '+g.name+' ';
+            });
+            scroller.set(h);
         }
     });
 }
