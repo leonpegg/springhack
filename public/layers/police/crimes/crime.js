@@ -500,6 +500,19 @@ function initNeighbourhood() {
         success: function (data) {
             addKml(data.neighbourhood, data.force);
             initForceData(data.force);
+            getPoliceTeam(data.neighbourhood, data.force);
+        }
+    });
+}
+
+function getPoliceTeam(neighbourhood, force) {
+    var b = '/data/police/force/'+force+'/'+neighbourhood; 
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: b,
+        success: function (data) {
+            console.log(data);
         }
     });
 }
