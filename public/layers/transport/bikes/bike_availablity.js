@@ -32,10 +32,11 @@ function addBikesToGoogleMap(bike_url, map) {
             var spaces = parseInt(e.nbEmptyDocks);
             var bikes = parseInt(e.nbBikes);
             var total = spaces + bikes;
+			var title = e.name + '(bikes: ' + bikes + ', spaces: ' + spaces + ')'
 			var marker = new google.maps.Marker({
 				position: location,
-				icon: '/images/cycle-hire-pushpin-icon.gif'//,
-//				title: e.name
+				icon: '/images/cycle-hire-pushpin-icon.gif',
+				title: title
 			});
             if(bikes < threshold) {
                 var ins = {
