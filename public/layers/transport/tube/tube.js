@@ -307,3 +307,10 @@ var layerTube = {
 		// render the layer
 	}
 }
+
+$(function () {
+$('#transport-tubes').on('click', function () {
+	console.log('transport tubes clicked');
+	$(this).addClass('active').parent().find('.filter-options').slideToggle();
+});
+});
