@@ -55,6 +55,12 @@ $(document).ready(function($) {
 			$(this).blur();
 		}
 	});
+
+    // police click
+    $('#police-crimes').on('click', function () {
+        initPoliceMap();
+        $(this).addClass('active');
+    });
 	
 	twitter.screenname = 'tfltravelalerts';
 	twitter.updateTweets();
@@ -104,19 +110,14 @@ var mapHandler = {
 				 position: google.maps.ControlPosition.RIGHT_TOP
 			 }
 		 });
-		 //this.marker.setPosition(map.getCenter());
-		 //this.marker.setMap(map);
-
-		 //request_crimes(mode);
-
+		 
 		 google.maps.event.addListener(this.marker, "dragend", function() {
 		     
 		 });
-		 google.maps.event.addListener(map, "zoom_changed", function() {
+		 google.maps.event.addListener(this.map, "zoom_changed", function() {
 		     
 		 });
 
-	 	//this.map = map;
 	},
 	// request the browser to give us the location
 	requestLocation : function () {
@@ -125,17 +126,10 @@ var mapHandler = {
 	},
 	// centre a map with either the defailt lang and long or the new ones
 	setCenter: function(location) {
-		
-		// // creates a long and lat object for the base lat and long in this object
-		// var lonlat = new OpenLayers.LonLat(this.longitude, this.latitude).transform(
-		// 	new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-		// 	new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator
-		// );	
-
 		// // set the center
 		console.log(this.map);
 		console.log(location);
-		this.map.setCenter(location);	
+		this.map.setCenter(location);
 	},
 	getMarkers : function() {
 		// holder function
@@ -156,5 +150,10 @@ var mapHandler = {
 		mapHandler.latitude = position.coords.latitude;
   		mapHandler.longitude = position.coords.longitude;	
   		mapHandler.initMap();
-	}
+	},
+    getCurrentCenter : function () {
+        var center = this.map.getCenter();
+        console.log(center);
+        return [center.lat(), center.lng()];
+    }
 };
