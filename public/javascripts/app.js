@@ -55,6 +55,12 @@ $(document).ready(function($) {
 			$(this).blur();
 		}
 	});
+
+    // police click
+    $('#police-crimes').on('click', function () {
+        initPoliceMap();
+        $(this).addClass('active');
+    });
 	
 	twitter.screenname = 'tfltravelalerts';
 	twitter.updateTweets();
@@ -147,6 +153,7 @@ var mapHandler = {
 	},
     getCurrentCenter : function () {
         var center = this.map.getCenter();
-        return [center.lat(), center.lon()];
+        console.log(center);
+        return [center.lat(), center.lng()];
     }
 };
