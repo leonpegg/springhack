@@ -42,7 +42,6 @@ category_order.push('other-crime');
 
 $('document').ready( function () {
     $('#police-crimes').on('click', function () {
-        console.log('police');
         initPoliceMap();
     });
 });
@@ -270,9 +269,8 @@ function crimes_street() {
      $(".crimeTypes,.crimeFacets h4,.crimeRoads").hide();
     var d = marker.getPosition();
     var a = circle_radius / 1609.344;
-    var url = document.location.pathname;
     var latLon = mapHandler.getCurrentCenter();
-    var b = url+'/data/police/crimes/'+latLon[0]+'/'+latLon[1]; 
+    var b = '/data/police/crimes/'+latLon[0]+'/'+latLon[1]; 
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -440,9 +438,6 @@ function add_marker(b, d) {
     markers.push(a)
 }
 function show_markers(a) { 
-    if ($.browser.msie && $.browser.version < 7) {
-        return
-    }
     remove("markers");
     var b = $(".crimeTypes");
     var d = new Object();
