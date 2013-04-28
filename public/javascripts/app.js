@@ -248,14 +248,14 @@ var mapHandler = {
     },
     redrawData : function() {
         if ($('#police-crimes').hasClass('active')) {
-            console.log('click1');
+
             $('#police-crimes').click();
 
             setTimeout(function() {
-                console.log('click2');
+
                 $('#police-crimes').click();
             }, 3000);
-            
+
         }
         if ($('#police-info').hasClass('active')) {
             $('#police-info').click().click();

@@ -229,7 +229,7 @@ function crimes_street() {
     var a = circle_radius / 1609.344;
     var latLon = mapHandler.getCurrentCenter();
     var b = '/data/police/crimes/'+latLon[0]+'/'+latLon[1]; 
-    console.log(b);
+    
     $.ajax({
         type: "GET",
         dataType: "json",
