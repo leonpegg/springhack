@@ -35,6 +35,12 @@ $(document).ready(function($) {
 		}
 	});
 	
+	$('.search-term').focus(function () {
+		$('#search').css('z-index',1006);
+	});
+	$('.search-term').focusout(function () {
+		$('#search').css('z-index',1000);
+	});
 	$('.search-term').keypress(function (e) {
 		if (e.which == 13) {
 			var address = $('.search-term').val();

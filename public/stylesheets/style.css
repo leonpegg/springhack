@@ -67,6 +67,16 @@ body {
   padding-left: 0;
   width: 85%;
 }
+#info-box {
+  border-radius: 0.5em;
+  -webkit-box-shadow: 0px 1px 20px #323232;
+  -moz-box-shadow: 0px 1px 20px #323232;
+  box-shadow: 0px 1px 20px #323232;
+  background: #776D6D;
+  opacity: 0.8;
+  color: white;
+  padding: 0.5em;
+}
 #filter .filter-group {
   display: block;
   padding: 0.5em;
