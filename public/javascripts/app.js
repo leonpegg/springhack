@@ -61,6 +61,20 @@ $(document).ready(function($) {
         initPoliceMap();
         $(this).addClass('active');
     });
+
+	$('#transport-bikes').click(function() {
+        $(this).toggleClass('active');
+		var active = $(this).hasClass('active');
+		var map = mapHandler.map;
+		if (active) {
+			mapHandler.bikeLayers = addBikesToGoogleMap('data/transport/bikes', map);
+		}
+		else if (mapHandler.bikeLayers) {
+			$.each(mapHandler.bikeLayers, function(i, e) {
+				e.setMap(null);	//dunno if this works
+			});
+		}
+	});
 	
 	twitter.screenname = 'tfltravelalerts';
 	twitter.updateTweets();

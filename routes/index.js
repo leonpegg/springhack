@@ -12,7 +12,7 @@ exports.index = function(req, res){
 
 var BIKE_UPDATE_INTERVAL = 1000 * 60 * 3;	//3 minutes in ms
 
-exports.bikes = function(req, res) {
+exports.transportBikes = function(req, res) {
 
 	var bikedata = {};
 	if (global.bikedata) {

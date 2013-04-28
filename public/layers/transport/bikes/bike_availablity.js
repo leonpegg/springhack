@@ -115,21 +115,4 @@ function addBikesToGoogleMap(bike_url, map) {
 
 function renderGoogleMap(checked) {
 	var map = mapHandler.map;
-	if (checked) {
-		mapHandler.bikeLayers = addBikesToGoogleMap('data/bikes', map);
-	}
-	else if (mapHandler.bikeLayers) {
-		$.each(mapHandler.bikeLayers, function(i, e) {
-			e.setMap(null);	//dunno if this works
-		});
-	}
 }
-
-$('document').ready(function() {
-	
-	$('input#transport-bikes').click(function() {
-		var checked = $(this).is(':checked');
-		renderGoogleMap(checked);
-	});
-});
-
