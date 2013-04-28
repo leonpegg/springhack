@@ -76,6 +76,44 @@ $(document).ready(function($) {
 		}
 	});
 	
+    var line_box = $('input#bus-route');
+    var remove_layer_fn = function() {
+        if (mapHandler && mapHandler.busLayers) {
+            var busLayers = mapHandler.busLayers;
+            mapHandler.busLayers = [];
+            $.each(busLayers, function(i, e) {
+                e.setMap(null);	//dunno if this works
+            });
+        }
+    };
+    var update_bus_fn = function() {
+        remove_layer_fn();
+        var url = 'data/transport/bus';
+        var line = line_box.val();
+        if (line) {
+            url += '?line=' + line;
+            addBusesToGoogleMap(url, mapHandler.map, mapHandler.busLayers);
+        }
+    };
+    line_box.keypress(function (e) {
+		if (e.which == 13) {
+            update_bus_fn();
+        }
+    });
+    
+	$('#transport-buses').click(function() {
+		$(this).toggleClass('active').parent().find('.filter-options').slideToggle();
+        // $(this).toggleClass('active');
+		var active = $(this).hasClass('active');
+
+		if (active) {
+            update_bus_fn();
+		}
+		else if (mapHandler.busLayers) {
+            remove_layer_fn();
+		}
+	});
+	
 	twitter.screenname = 'tfltravelalerts';
 	twitter.updateTweets();
 	
@@ -97,6 +135,7 @@ var mapHandler = {
 	marker: new google.maps.Marker({
     	draggable: true
 	}),
+    busLayers: [],
 	
 	init: function() {
 		// request location will do so, then draw the maps afterwards
