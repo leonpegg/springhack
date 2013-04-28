@@ -2,20 +2,35 @@ extends layout
 
 block content
   #map
+  #nav-shadow
   #nav
     .filter
       span.icon-filter
     .twitter
       span.icon-twitter
   #filter
-    form
-      input#police(type='button', value='Police')
-      #policeData
-        #policeTotal
-      label Bikes
-        input#bikes(type='checkbox')
+    .filter-group
+      label.filter-toggle Police (Crimes)
+        input#police-crimes(type='checkbox')
+      .filter-options Some options go here
+    .filter-group
+      label.filter-toggle Transport (Bikes)
+        input#transport-bikes(type='checkbox')
+      .filter-options Some options go here
+    .filter-group
+      label.filter-toggle Transport (Buses)
+        input#transport-buses(type='checkbox')
+      .filter-options Some options go here
+    .filter-group
+      label.filter-toggle Transport (Tubes)
+        input#transport-tubes(type='checkbox')
+      .filter-options Some options go here
   #twitter
+    #tweets
   #search
-    form
-      label.icon-search
-        input(type='text')
+    label.icon-search
+      input.search-term(type='text', placeholder='Location')
+  #about
+    a(href='https://github.com/leonpegg/springhack') Fork us on 
+      span.icon-github-sign
+  #info-box

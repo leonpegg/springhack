@@ -4,13 +4,19 @@ html
     meta(name="viewport", content="user-scalable=no, width=device-width")
     title Spring Hack
     link(rel='stylesheet', href='/stylesheets/reset.css')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Vollkorn')
     link(rel='stylesheet', href='/stylesheets/font-awesome.css')
     link(rel='stylesheet', href='/stylesheets/layout.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    // Vedor javascripts
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCClvuRbnarOxeBK7yc8qLOmKAEo3bWwsI&sensor=true&libraries=visualization')
     script(src='/javascripts/vendor/jquery.min.js')
+    script(src='/javascripts/vendor/regexhighlight.jquery.min.js')
+    // Application javascripts
+    script(src='/javascripts/twitter.js')
     script(src='/javascripts/app.js')
-    script(src='/javascripts/crime.js')
-    script(src='/bikes_layers/overlay_ol.js')
+    // Layer javascripts
+    script(src='/layers/transport/tube/tube.js')
+    script(src='/layers/police/crimes/crime.js')
   body
     block content

@@ -22,6 +22,28 @@ body,
   width: 3em;
   height: 100%;
 }
+#about {
+  position: absolute;
+  z-index: 1004;
+  bottom: 2em;
+  right: 1em;
+}
+#info-box {
+  position: absolute;
+  z-index: 1000;
+  bottom: 1em;
+  left: 50%;
+  margin-left: -12.5em;
+  width: 25em;
+}
+#nav-shadow {
+  position: absolute;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 3em;
+  height: 100%;
+}
 .filter,
 .twitter {
   width: 100%;
@@ -33,15 +55,15 @@ body,
   z-index: 1002;
   top: 0;
   left: 3em;
+  margin-left: -2px;
   width: 0px;
   height: 100%;
 }
 #search {
   position: absolute;
-  z-index: 1002;
+  z-index: 1000;
   top: 0.5em;
   left: 50%;
   margin-left: -12.5em;
   width: 25em;
-  height: 3em;
 }
