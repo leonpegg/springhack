@@ -156,5 +156,9 @@ var mapHandler = {
 		mapHandler.latitude = position.coords.latitude;
   		mapHandler.longitude = position.coords.longitude;	
   		mapHandler.initMap();
-	}
+	},
+    getCurrentCenter : function () {
+        var center = this.map.getCenter();
+        return [center.lat(), center.lon()];
+    }
 };
